@@ -61,16 +61,16 @@ class BottomNavBar extends StatelessWidget implements PreferredSizeWidget {
     return BottomNavigationBar(
       items: const [
         BottomNavigationBarItem(
-          icon: Icon(Icons.sensors),
-          label: 'Scan',
+          icon: Icon(Icons.chat),
+          label: 'Chat',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.bar_chart),
-          label: 'Daten',
+          icon: Icon(Icons.location_pin),
+          label: 'Treffen',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.inventory),
-          label: 'Tags',
+          icon: Icon(Icons.people),
+          label: 'Mitglieder',
         ),
       ],
       currentIndex: currentIndex,
