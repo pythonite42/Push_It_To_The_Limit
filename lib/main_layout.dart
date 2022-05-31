@@ -37,35 +37,48 @@ class HomePageState extends State<HomePage> {
         "assets/pushit_logo.png",
       )),
       Scaffold(
-        drawer: MyDrawer(),
-        backgroundColor: Colors.transparent,
-        appBar: MyAppBar(),
-        body: Center(
-          child: _widgetOptions.elementAt(_selectedIndex),
-        ),
-        bottomNavigationBar: BottomNavigationBar(
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Icons.chat),
-              label: 'Chat',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.location_pin),
-              label: 'Treffen',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.people),
-              label: 'Mitglieder',
-            ),
-          ],
-          currentIndex: _selectedIndex,
-          selectedItemColor: Theme.of(context).colorScheme.secondary,
-          unselectedItemColor: Theme.of(context).colorScheme.onBackground,
-          onTap: _onItemTapped,
-          backgroundColor: Theme.of(context).colorScheme.primary,
-          showUnselectedLabels: false,
-        ),
-      )
+          drawer: MyDrawer(),
+          backgroundColor: Colors.transparent,
+          appBar: MyAppBar(),
+          body: Center(
+            child: _widgetOptions.elementAt(_selectedIndex),
+          ),
+          bottomNavigationBar:
+              BottomNavBar(currentIndex: _selectedIndex, onTap: _onItemTapped))
     ]);
+  }
+}
+
+class BottomNavBar extends StatelessWidget implements PreferredSizeWidget {
+  const BottomNavBar({Key? key, this.currentIndex = 0, this.onTap})
+      : super(key: key);
+  final int currentIndex;
+  final void Function(int)? onTap;
+  @override
+  Size get preferredSize => Size.fromHeight(kToolbarHeight);
+  @override
+  Widget build(BuildContext context) {
+    return BottomNavigationBar(
+      items: const [
+        BottomNavigationBarItem(
+          icon: Icon(Icons.sensors),
+          label: 'Scan',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.bar_chart),
+          label: 'Daten',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.inventory),
+          label: 'Tags',
+        ),
+      ],
+      currentIndex: currentIndex,
+      selectedItemColor: Theme.of(context).colorScheme.secondary,
+      unselectedItemColor: Theme.of(context).colorScheme.onBackground,
+      onTap: onTap,
+      backgroundColor: Theme.of(context).colorScheme.primary,
+      showUnselectedLabels: false,
+    );
   }
 }

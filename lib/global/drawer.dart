@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pushit/global/list_tiles.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MyDrawer extends StatelessWidget {
   const MyDrawer({Key? key}) : super(key: key);
@@ -19,15 +20,31 @@ class MyDrawer extends StatelessWidget {
                     MyTile(
                       context: context,
                       heightFactor: 0.2,
+                      onTap: () {
+                        Navigator.of(context).pushNamed("/home");
+                      },
                       child: Image.asset(
                         "assets/pushit_logo.png",
                       ),
-                    ).classic(() {
-                      Navigator.pushNamed(context, '/home');
-                    }),
+                    ),
                     SizedBox(
                       height: 20,
                     ),
+                    MyTile(
+                        context: context,
+                        heightFactor: 0.2,
+                        onTap: () async {
+                          SharedPreferences prefs =
+                              await SharedPreferences.getInstance();
+                          prefs.setBool('isLoggedIn', false);
+                          Navigator.pushNamed(context, '/login');
+                        },
+                        child: Text(
+                          "Ausloggen",
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.onPrimary,
+                          ),
+                        )),
                     Divider(
                       thickness: 1,
                       color: Theme.of(context).colorScheme.onPrimary,
