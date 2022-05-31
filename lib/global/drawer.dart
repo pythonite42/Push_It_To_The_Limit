@@ -37,6 +37,7 @@ class MyDrawer extends StatelessWidget {
                           SharedPreferences prefs =
                               await SharedPreferences.getInstance();
                           prefs.setBool('isLoggedIn', false);
+                          prefs.setString('username', "");
                           Navigator.pushNamed(context, '/login');
                         },
                         child: Text(

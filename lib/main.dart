@@ -3,6 +3,7 @@ import 'package:pushit/colors.dart';
 import 'package:pushit/dm.dart';
 import 'package:pushit/login.dart';
 import 'package:pushit/main_layout.dart';
+import 'package:pushit/register.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
@@ -37,6 +38,7 @@ class MyApp extends StatelessWidget {
         '/dm': (context) => DM(),
         '/home': (context) => HomePage(),
         '/login': (context) => Login(),
+        '/register': (context) => Register(),
       },
     );
   }
