@@ -20,7 +20,7 @@ class MyDrawer extends StatelessWidget {
                       context: context,
                       heightFactor: 0.2,
                       child: Image.asset(
-                        "assets/pushit_logo.jpeg",
+                        "assets/pushit_logo.png",
                       ),
                     ).classic(() {
                       Navigator.pushNamed(context, '/home');

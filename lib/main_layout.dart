@@ -34,7 +34,7 @@ class HomePageState extends State<HomePage> {
     return Stack(children: <Widget>[
       Center(
           child: Image.asset(
-        "assets/pushit_logo.jpeg",
+        "assets/pushit_logo.png",
       )),
       Scaffold(
         drawer: MyDrawer(),
