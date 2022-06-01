@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:pushit/global/global_widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -43,10 +41,7 @@ class _LoginState extends State<Login> {
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Text(
-                              "Login",
-                              style: TextStyle(fontSize: 20),
-                            ),
+                            Heading(label: "Login"),
                             SpaceH(),
                             TextFormField(
                               decoration: const InputDecoration(

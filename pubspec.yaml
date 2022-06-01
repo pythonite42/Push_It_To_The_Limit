@@ -36,6 +36,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   shared_preferences: ^2.0.15
   image_picker: ^0.8.5
+  auto_size_text: ^3.0.0
 
 dev_dependencies:
   flutter_test:
@@ -75,7 +76,10 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
+  fonts:
+    - family: MetalLord
+      fonts:
+        - asset: assets/metal_lord.ttf
   #   - family: Schyler
   #     fonts:
   #       - asset: fonts/Schyler-Regular.ttf

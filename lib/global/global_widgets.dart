@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:pushit/global/appbar.dart';
 import 'package:pushit/main_layout.dart';
@@ -39,5 +40,26 @@ class SpaceW extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         padding: EdgeInsets.only(right: MySize(context).w * width));
+  }
+}
+
+class Heading extends StatelessWidget {
+  Heading({Key? key, required this.label, this.padding = 1}) : super(key: key);
+  final String label;
+  double padding;
+
+  @override
+  Widget build(BuildContext context) {
+    if (padding == 1) {
+      padding = MySize(context).w * 0.1;
+    }
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: padding),
+      child: AutoSizeText(
+        label,
+        style: TextStyle(fontSize: 100, fontFamily: 'MetalLord'),
+        maxLines: 1,
+      ),
+    );
   }
 }

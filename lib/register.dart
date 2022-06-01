@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -7,7 +6,6 @@ import 'package:pushit/colors.dart';
 import 'package:pushit/global/global_widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:io';
-//import 'package:image/image.dart' as img;
 
 class Register extends StatefulWidget {
   const Register({Key? key}) : super(key: key);
@@ -51,11 +49,8 @@ class _RegisterState extends State<Register> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         SpaceH(),
-                        Text(
-                          "Registrieren",
-                          style: TextStyle(fontSize: 20),
-                        ),
-                        SpaceH(),
+                        Heading(label: "Registrieren"),
+                        SpaceH(0.08),
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
