@@ -5,6 +5,7 @@ import 'package:pushit/dm.dart';
 import 'package:pushit/edit_profile.dart';
 import 'package:pushit/login.dart';
 import 'package:pushit/main_layout.dart';
+import 'package:pushit/profile.dart';
 import 'package:pushit/register.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -50,6 +51,9 @@ class MyApp extends StatelessWidget {
           page = Register();
         } else if (settings.name == '/editProfile') {
           page = EditProfile();
+        } else if (settings.name == '/profile') {
+          Map args = settings.arguments as Map;
+          page = Profile(data: args);
         } else {
           page = HomePage();
         }
