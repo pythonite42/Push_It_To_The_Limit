@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:pushit/colors.dart';
 import 'package:pushit/dm.dart';
+import 'package:pushit/edit_profile.dart';
 import 'package:pushit/login.dart';
 import 'package:pushit/main_layout.dart';
 import 'package:pushit/register.dart';
@@ -10,6 +12,8 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SharedPreferences prefs = await SharedPreferences.getInstance();
   var status = prefs.getBool('isLoggedIn') ?? false;
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitDown, DeviceOrientation.portraitUp]);
   runApp(MyApp(home: status == true ? HomePage() : Login()));
 }
 
@@ -39,6 +43,7 @@ class MyApp extends StatelessWidget {
         '/home': (context) => HomePage(),
         '/login': (context) => Login(),
         '/register': (context) => Register(),
+        '/editProfile': (context) => EditProfile(),
       },
     );
   }

@@ -73,7 +73,10 @@ class MyDrawer extends StatelessWidget {
                                                     .onPrimary))
                                       ])),
                                   IconButton(
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        Navigator.pushNamed(
+                                            context, '/editProfile');
+                                      },
                                       icon: Icon(Icons.settings,
                                           color: Theme.of(context)
                                               .colorScheme
