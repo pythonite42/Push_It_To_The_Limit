@@ -38,12 +38,22 @@ class MyApp extends StatelessWidget {
             onBackground: beige,
           )),
       home: home,
-      routes: {
-        '/dm': (context) => DM(),
-        '/home': (context) => HomePage(),
-        '/login': (context) => Login(),
-        '/register': (context) => Register(),
-        '/editProfile': (context) => EditProfile(),
+      onGenerateRoute: (settings) {
+        late Widget page;
+        if (settings.name == '/home') {
+          page = HomePage();
+        } else if (settings.name == '/dm') {
+          page = DM();
+        } else if (settings.name == '/login') {
+          page = Login();
+        } else if (settings.name == '/register') {
+          page = Register();
+        } else if (settings.name == '/editProfile') {
+          page = EditProfile();
+        } else {
+          page = HomePage();
+        }
+        return MaterialPageRoute(builder: (context) => page);
       },
     );
   }

@@ -62,6 +62,7 @@ class MyDrawer extends StatelessWidget {
                                         Text(
                                           snapshot.data![1],
                                           style: TextStyle(
+                                              fontWeight: FontWeight.bold,
                                               color: Theme.of(context)
                                                   .colorScheme
                                                   .onPrimary),
