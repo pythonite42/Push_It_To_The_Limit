@@ -101,3 +101,20 @@ MaterialColor greyMaterial = const MaterialColor(
   },
 );
 Color grey = const Color(0xFF555651);
+
+MaterialColor lightGreyMaterial = const MaterialColor(
+  0xFFdcdcda,
+  <int, Color>{
+    50: Color(0x0Ddcdcda),
+    100: Color(0x1Adcdcda),
+    200: Color(0x33dcdcda),
+    300: Color(0x4Ddcdcda),
+    400: Color(0x66dcdcda),
+    500: Color(0x80dcdcda),
+    600: Color(0x99dcdcda),
+    700: Color(0xB3dcdcda),
+    800: Color(0xCCdcdcda),
+    900: Color(0xE6dcdcda),
+  },
+);
+Color lightGrey = const Color(0xFFdcdcda);

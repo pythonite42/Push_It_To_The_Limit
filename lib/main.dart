@@ -1,33 +1,49 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:pushit/colors.dart';
 import 'package:pushit/dm.dart';
+import 'package:pushit/edit_profile.dart';
+import 'package:pushit/login.dart';
 import 'package:pushit/main_layout.dart';
+import 'package:pushit/register.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  var status = prefs.getBool('isLoggedIn') ?? false;
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitDown, DeviceOrientation.portraitUp]);
+  runApp(MyApp(home: status == true ? HomePage() : Login()));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({Key? key, required this.home}) : super(key: key);
+  final Widget home;
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Push It',
       theme: ThemeData(
+          cardColor: lightGrey,
           colorScheme: ColorScheme.fromSwatch().copyWith(
-        primary: blackMaterial,
-        onPrimary: beige,
-        secondary: brightRed,
-        onSecondary: beige,
-        surface: greyMaterial[200],
-        background: black,
-        onSurface: black,
-        onBackground: beige,
-      )),
-      home: const HomePage(),
+            primary: blackMaterial,
+            onPrimary: beige,
+            secondary: brightRed,
+            onSecondary: beige,
+            surface: lightGrey,
+            background: black,
+            onSurface: black,
+            onBackground: beige,
+          )),
+      home: home,
       routes: {
         '/dm': (context) => DM(),
+        '/home': (context) => HomePage(),
+        '/login': (context) => Login(),
+        '/register': (context) => Register(),
+        '/editProfile': (context) => EditProfile(),
       },
     );
   }
