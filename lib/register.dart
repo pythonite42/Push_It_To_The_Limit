@@ -154,6 +154,9 @@ class _RegisterState extends State<Register> {
                           if (value == null || value.isEmpty) {
                             return 'Gib deinen Benutzernamen ein';
                           }
+                          if (value == "admin") {
+                            return 'Der Benutzername ist ungültig';
+                          }
                           return null;
                         },
                         onSaved: (String? value) {
@@ -235,7 +238,11 @@ class _RegisterState extends State<Register> {
                                   },
                                   onSaved: (String? value) {
                                     setState(() {
-                                      geburtsjahr = int.parse(value ?? "0");
+                                      try {
+                                        geburtsjahr = int.parse(value ?? "0");
+                                      } catch (_) {
+                                        geburtsjahr = 0;
+                                      }
                                     });
                                   },
                                 )),
@@ -380,7 +387,8 @@ class _RegisterState extends State<Register> {
                                       await SharedPreferences.getInstance();
                                   prefs.setBool('isLoggedIn', true);
                                   prefs.setString('username', username);
-                                  Navigator.pushNamed(context, '/home');
+                                  Navigator.pushNamedAndRemoveUntil(context,
+                                      '/home', (Route<dynamic> route) => false);
                                 }
                               }
                             },
