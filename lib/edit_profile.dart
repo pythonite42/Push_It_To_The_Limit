@@ -216,6 +216,9 @@ class _EditProfileFormState extends State<EditProfileForm> {
                 if (value == null || value.isEmpty) {
                   return 'Gib deinen Benutzernamen ein';
                 }
+                if (value == "admin") {
+                  return 'Der Benutzername ist ungültig';
+                }
                 return null;
               },
               onSaved: (String? value) {
