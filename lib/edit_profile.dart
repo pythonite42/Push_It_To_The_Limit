@@ -401,24 +401,15 @@ class _EditProfileFormState extends State<EditProfileForm> {
             ),
             SpaceH(),
             ConstrainedBox(
-              constraints: BoxConstraints(minWidth: MySize(context).w * 0.3),
+              constraints: BoxConstraints(minWidth: MySize(context).w * 0.4),
               child: ElevatedButton(
                   onPressed: () async {
                     if (formKey.currentState!.validate()) {
                       formKey.currentState?.save();
                       SharedPreferences prefs =
                           await SharedPreferences.getInstance();
-                      prefs.setBool('isLoggedIn', true);
                       prefs.setString('username', username);
-                      log(name);
-                      log(bike);
-                      log(username);
-                      log(wohnort);
-                      log(geburtsjahr.toString());
-                      log(fahrstil);
-                      log(beschreibung);
-                      log(geschlecht);
-                      log(insta);
+
                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                         content: Text('Profil aktualisiert'),
                       ));
@@ -426,7 +417,67 @@ class _EditProfileFormState extends State<EditProfileForm> {
                   },
                   child: Text(
                     "Speichern",
-                    style: TextStyle(color: Theme.of(context).cardColor),
+                    style: TextStyle(
+                        color: Theme.of(context).cardColor, fontSize: 18),
+                  )),
+            ),
+            SpaceH(),
+            Divider(
+              thickness: 1,
+              color: red,
+            ),
+            SpaceH(),
+            ConstrainedBox(
+              constraints: BoxConstraints(minWidth: MySize(context).w * 0.3),
+              child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      primary: Colors.white,
+                      side: BorderSide(
+                        width: 2.0,
+                        color: red,
+                      )),
+                  onPressed: () async {
+                    showDialog(
+                      useRootNavigator: false,
+                      context: context,
+                      builder: (_) {
+                        return AlertDialog(
+                          //insetPadding: EdgeInsets.all(15),
+                          title: Text("Profil löschen"),
+                          content: Text(
+                              "Wenn du dein Profil löschst kann es nicht wiederhergestellt werden.\n\nMöchtest du dein Profil dennoch löschen?"),
+                          actions: [
+                            TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: const Text(
+                                  "Abbrechen",
+                                )),
+                            TextButton(
+                                onPressed: () async {
+                                  SharedPreferences prefs =
+                                      await SharedPreferences.getInstance();
+                                  prefs.setBool('isLoggedIn', false);
+                                  prefs.setString('username', "");
+                                  Navigator.pushNamedAndRemoveUntil(
+                                      context,
+                                      '/login',
+                                      (Route<dynamic> route) => false);
+                                },
+                                child: Text(
+                                  "Profil löschen",
+                                  style: TextStyle(color: red),
+                                ))
+                          ],
+                        );
+                      },
+                      barrierDismissible: true,
+                    );
+                  },
+                  child: Text(
+                    "Profil löschen",
+                    style: TextStyle(color: red),
                   )),
             ),
             SpaceH()
