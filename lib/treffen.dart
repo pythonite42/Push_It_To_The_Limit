@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'dart:typed_data';
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pushit/colors.dart';
@@ -240,7 +241,97 @@ class Treffen extends StatelessWidget {
                                                   },
                                                   child: Text("Teilnehmer"))
                                             ],
-                                          )
+                                          ),
+                                          SpaceH(0.02),
+                                          if (data[i]["admin"])
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Expanded(
+                                                  child: ElevatedButton(
+                                                      style: ButtonStyle(
+                                                          padding:
+                                                              MaterialStateProperty
+                                                                  .all(EdgeInsets
+                                                                      .zero),
+                                                          foregroundColor:
+                                                              MaterialStateProperty
+                                                                  .all(black),
+                                                          backgroundColor:
+                                                              MaterialStateProperty
+                                                                  .all(
+                                                                      brightRed)),
+                                                      onPressed: () {},
+                                                      child: AutoSizeText(
+                                                        "Absagen",
+                                                        maxLines: 1,
+                                                      )),
+                                                ),
+                                                SpaceW(0.03),
+                                                Expanded(
+                                                    child: ElevatedButton(
+                                                        style: ButtonStyle(
+                                                            padding:
+                                                                MaterialStateProperty.all(
+                                                                    EdgeInsets
+                                                                        .zero),
+                                                            foregroundColor:
+                                                                MaterialStateProperty
+                                                                    .all(black),
+                                                            backgroundColor:
+                                                                MaterialStateProperty
+                                                                    .all(Colors
+                                                                        .yellow)),
+                                                        onPressed: () {},
+                                                        child: AutoSizeText(
+                                                          "Vielleicht",
+                                                          maxLines: 1,
+                                                        ))),
+                                                SpaceW(0.03),
+                                                Expanded(
+                                                    child: ElevatedButton(
+                                                        style: ButtonStyle(
+                                                            padding:
+                                                                MaterialStateProperty.all(
+                                                                    EdgeInsets
+                                                                        .zero),
+                                                            foregroundColor:
+                                                                MaterialStateProperty
+                                                                    .all(black),
+                                                            backgroundColor:
+                                                                MaterialStateProperty
+                                                                    .all(Colors
+                                                                        .green)),
+                                                        onPressed: () {},
+                                                        child: AutoSizeText(
+                                                          "Zusagen",
+                                                          maxLines: 1,
+                                                        )))
+                                              ],
+                                            ),
+                                          if (!data[i]["admin"])
+                                            Row(
+                                                mainAxisSize: MainAxisSize.max,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.end,
+                                                children: [
+                                                  ElevatedButton(
+                                                      style: ButtonStyle(
+                                                          foregroundColor:
+                                                              MaterialStateProperty
+                                                                  .all(black),
+                                                          backgroundColor:
+                                                              MaterialStateProperty
+                                                                  .all(Colors
+                                                                      .green)),
+                                                      onPressed: () {},
+                                                      child: AutoSizeText(
+                                                        "Zusagen",
+                                                        maxLines: 1,
+                                                      ))
+                                                ])
                                         ],
                                       ))))),
                       SpaceH(0.02),
