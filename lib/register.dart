@@ -387,7 +387,8 @@ class _RegisterState extends State<Register> {
                                       await SharedPreferences.getInstance();
                                   prefs.setBool('isLoggedIn', true);
                                   prefs.setString('username', username);
-                                  Navigator.pushNamed(context, '/home');
+                                  Navigator.pushNamedAndRemoveUntil(context,
+                                      '/home', (Route<dynamic> route) => false);
                                 }
                               }
                             },

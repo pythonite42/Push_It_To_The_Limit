@@ -88,7 +88,10 @@ class _LoginState extends State<Login> {
                                           await SharedPreferences.getInstance();
                                       prefs.setBool('isLoggedIn', true);
                                       prefs.setString('username', username);
-                                      Navigator.pushNamed(context, '/home');
+                                      Navigator.pushNamedAndRemoveUntil(
+                                          context,
+                                          '/home',
+                                          (Route<dynamic> route) => false);
                                     }
                                   },
                                   child: Text(
