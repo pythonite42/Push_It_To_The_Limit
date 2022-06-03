@@ -25,47 +25,38 @@ class Treffen extends StatelessWidget {
             "name": "Sarah",
             "bike": "Kawasaki Z400",
             "image": list,
+            "username": "sarah.flutter"
           },
           {
             "name": "Sarah",
             "bike": "Kawasaki Z400",
             "image": list,
+            "username": "sarah.flutter"
           },
           {
             "name": "Sarah",
             "bike": "Kawasaki Z400",
             "image": list,
+            "username": "sarah.flutter"
           },
           {
             "name": "Sarah",
             "bike": "Kawasaki Z400",
             "image": list,
+            "username": "sarah.flutter"
           },
           {
             "name": "Sarah",
             "bike": "Kawasaki Z400",
             "image": list,
+            "username": "sarah.flutter"
           },
           {
             "name": "Sarah",
             "bike": "Kawasaki Z400",
             "image": list,
+            "username": "sarah.flutter"
           },
-          {
-            "name": "Sarah",
-            "bike": "Kawasaki Z400",
-            "image": list,
-          },
-          {
-            "name": "Sarah",
-            "bike": "Kawasaki Z400",
-            "image": list,
-          },
-          {
-            "name": "Sarah",
-            "bike": "Kawasaki Z400",
-            "image": list,
-          }
         ]
       },
       {
@@ -78,12 +69,20 @@ class Treffen extends StatelessWidget {
             "name": "Sarah",
             "bike": "Kawasaki Z400",
             "image": list,
+            "username": "sarah.flutter"
           },
           {
             "name": "Sarah",
             "bike": "Kawasaki Z400",
             "image": list,
-          }
+            "username": "sarah.flutter"
+          },
+          {
+            "name": "Sarah",
+            "bike": "Kawasaki Z400",
+            "image": list,
+            "username": "sarah.flutter"
+          },
         ]
       },
       {
@@ -96,12 +95,14 @@ class Treffen extends StatelessWidget {
             "name": "Sarah",
             "bike": "Kawasaki Z400",
             "image": list,
+            "username": "sarah.flutter"
           },
           {
             "name": "Sarah",
             "bike": "Kawasaki Z400",
             "image": list,
-          }
+            "username": "sarah.flutter"
+          },
         ]
       },
       {
@@ -114,12 +115,20 @@ class Treffen extends StatelessWidget {
             "name": "Sarah",
             "bike": "Kawasaki Z400",
             "image": list,
+            "username": "sarah.flutter"
           },
           {
             "name": "Sarah",
             "bike": "Kawasaki Z400",
             "image": list,
-          }
+            "username": "sarah.flutter"
+          },
+          {
+            "name": "Sarah",
+            "bike": "Kawasaki Z400",
+            "image": list,
+            "username": "sarah.flutter"
+          },
         ]
       },
       {
@@ -132,12 +141,8 @@ class Treffen extends StatelessWidget {
             "name": "Sarah",
             "bike": "Kawasaki Z400",
             "image": list,
+            "username": "sarah.flutter"
           },
-          {
-            "name": "Sarah",
-            "bike": "Kawasaki Z400",
-            "image": list,
-          }
         ]
       },
     ];
@@ -276,27 +281,40 @@ class Treffen extends StatelessWidget {
                 children: [
                   for (var i = 0; i < participants.length; i++)
                     Column(children: [
-                      Row(
-                        children: [
-                          CircleAvatar(
-                            radius: MySize(context).w * 0.07,
-                            backgroundImage:
-                                MemoryImage(participants[i]["image"]), //here
-                          ),
-                          SpaceW(),
-                          Expanded(
-                              child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                Text(
-                                  participants[i]["name"],
-                                  style: TextStyle(fontWeight: FontWeight.bold),
-                                ),
-                                Text(participants[i]["bike"],
-                                    style: TextStyle())
-                              ])),
-                        ],
+                      InkWell(
+                        child: Row(
+                          children: [
+                            CircleAvatar(
+                              radius: MySize(context).w * 0.07,
+                              backgroundImage:
+                                  MemoryImage(participants[i]["image"]), //here
+                            ),
+                            SpaceW(),
+                            Expanded(
+                                child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                  Text(
+                                    participants[i]["name"],
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold),
+                                  ),
+                                  Text(participants[i]["bike"],
+                                      style: TextStyle())
+                                ])),
+                          ],
+                        ),
+                        onTap: () async {
+                          var profileData = await getProfileData(
+                              participants[i]["username"],
+                              participants[i]["name"],
+                              participants[i]["bike"],
+                              participants[i]["image"]);
+                          Navigator.pushNamed(context, "/profile",
+                              arguments: profileData);
+                        },
                       ),
                       if (i != participants.length - 1)
                         Column(children: const [
@@ -323,4 +341,20 @@ class Treffen extends StatelessWidget {
       barrierDismissible: true,
     );
   }
+}
+
+Future<Map> getProfileData(username, name, bike, image) async {
+  await Future.delayed(Duration(seconds: 1));
+  return {
+    "name": name,
+    "bike": bike,
+    "image": image,
+    "username": username,
+    "wohnort": "Bremen Innenstadt",
+    "geburtsjahr": 2000,
+    "fahrstil": "Rasant",
+    "beschreibung": "",
+    "geschlecht": "Keine Angabe",
+    "insta": ""
+  };
 }
