@@ -62,6 +62,7 @@ class MyDrawer extends StatelessWidget {
                                         Text(
                                           snapshot.data![1],
                                           style: TextStyle(
+                                              fontWeight: FontWeight.bold,
                                               color: Theme.of(context)
                                                   .colorScheme
                                                   .onPrimary),
@@ -151,7 +152,8 @@ class MyDrawer extends StatelessWidget {
                               await SharedPreferences.getInstance();
                           prefs.setBool('isLoggedIn', false);
                           prefs.setString('username', "");
-                          Navigator.pushNamed(context, '/login');
+                          Navigator.pushNamedAndRemoveUntil(context, '/login',
+                              (Route<dynamic> route) => false);
                         },
                         child: Text(
                           "Ausloggen",
