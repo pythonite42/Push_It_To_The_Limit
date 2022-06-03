@@ -184,3 +184,63 @@ class WholeScreenErrorFutureBuilder extends StatelessWidget {
             ])));
   }
 }
+
+class CardErrorFutureBuilder extends StatelessWidget {
+  const CardErrorFutureBuilder({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+        child: Opacity(
+            opacity: 0.95,
+            child: SizedBox(
+                height: MySize(context).h * 0.3,
+                width: MySize(context).w * 0.7,
+                child: Card(
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                      Icon(
+                        Icons.error_outline,
+                        color: red,
+                        size: MySize(context).h * 0.1,
+                      ),
+                      Padding(
+                          padding:
+                              EdgeInsets.only(top: MySize(context).h * 0.04),
+                          child: Text('Server-Fehler',
+                              textAlign: TextAlign.center)),
+                    ])))));
+  }
+}
+
+class CardLoadingFutureBuilder extends StatelessWidget {
+  const CardLoadingFutureBuilder({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+        child: Opacity(
+            opacity: 0.95,
+            child: SizedBox(
+                height: MySize(context).h * 0.3,
+                width: MySize(context).w * 0.7,
+                child: Card(
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                      SizedBox(
+                        width: MySize(context).h * 0.1,
+                        height: MySize(context).h * 0.1,
+                        child: CircularProgressIndicator(
+                          color: red,
+                        ),
+                      ),
+                      Padding(
+                          padding:
+                              EdgeInsets.only(top: MySize(context).h * 0.04),
+                          child:
+                              Text('Loading ...', textAlign: TextAlign.center)),
+                    ])))));
+  }
+}
