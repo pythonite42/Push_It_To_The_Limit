@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pushit/colors.dart';
 import 'package:pushit/global/global_widgets.dart';
+import 'package:pushit/sql.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:io';
 
@@ -387,6 +388,21 @@ class _RegisterState extends State<Register> {
                                       await SharedPreferences.getInstance();
                                   prefs.setBool('isLoggedIn', true);
                                   prefs.setString('username', username);
+                                  loadingDialog(context);
+                                  await SQL().registerMember({
+                                    "name": name,
+                                    "bike": bike,
+                                    "image": image,
+                                    "username": username,
+                                    "password": password,
+                                    "wohnort": wohnort,
+                                    "geburtsjahr": geburtsjahr,
+                                    "fahrstil": fahrstil,
+                                    "beschreibung": beschreibung,
+                                    "geschlecht": geschlecht,
+                                    "insta": insta
+                                  });
+                                  Navigator.of(context).pop();
                                   Navigator.pushNamedAndRemoveUntil(context,
                                       '/home', (Route<dynamic> route) => false);
                                 }
