@@ -12,18 +12,11 @@ class SQL {
 
   registerMember(Map<String, dynamic> values) async {
     PostgreSQLConnection connection = await connect();
-    var result = await connection.query('SELECT MAX(id) FROM member');
-    log(result.toString());
-    var id = 1;
-    if (result[0][0] != null) {
-      id = result[0][0] + 1;
-    }
-    values["id"] = id;
+
     await connection.query("""INSERT INTO member 
-        (ID, NAME,BIKE,IMAGE,USERNAME,PASSWORD,WOHNORT,GEBURTSJAHR,FAHRSTIL,BESCHREIBUNG,GESCHLECHT,INSTA) 
+        (NAME,BIKE,IMAGE,USERNAME,PASSWORD,WOHNORT,GEBURTSJAHR,FAHRSTIL,BESCHREIBUNG,GESCHLECHT,INSTA) 
         VALUES 
-        (@id:int4,
-        @name:text, 
+        (@name:text, 
         @bike:text, 
         @image:bytea, 
         @username:text,
@@ -34,8 +27,7 @@ class SQL {
         @beschreibung:text,
         @geschlecht:text,
         @insta:text)""", substitutionValues: values);
-    var res = await connection.query('SELECT ID,NAME,BIKE FROM member;');
-    log(res.toString());
+
     await connection.close();
   }
 }
