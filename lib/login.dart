@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:pushit/colors.dart';
 import 'package:pushit/global/global_widgets.dart';
+import 'package:pushit/sql.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Login extends StatefulWidget {
@@ -84,14 +86,45 @@ class _LoginState extends State<Login> {
                                   onPressed: () async {
                                     if (formKey.currentState!.validate()) {
                                       formKey.currentState?.save();
-                                      SharedPreferences prefs =
-                                          await SharedPreferences.getInstance();
-                                      prefs.setBool('isLoggedIn', true);
-                                      prefs.setString('username', username);
-                                      Navigator.pushNamedAndRemoveUntil(
-                                          context,
-                                          '/home',
-                                          (Route<dynamic> route) => false);
+                                      loadingDialog(context);
+                                      bool loginWorked =
+                                          await SQL().login(username, password);
+                                      Navigator.of(context).pop();
+                                      if (loginWorked) {
+                                        SharedPreferences prefs =
+                                            await SharedPreferences
+                                                .getInstance();
+                                        prefs.setBool('isLoggedIn', true);
+                                        prefs.setString('username', username);
+                                        Navigator.pushNamedAndRemoveUntil(
+                                            context,
+                                            '/home',
+                                            (Route<dynamic> route) => false);
+                                      } else {
+                                        myDialog(
+                                            context,
+                                            Column(
+                                                mainAxisSize: MainAxisSize.min,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: <Widget>[
+                                                  Icon(
+                                                    Icons.error_outline,
+                                                    color: red,
+                                                    size:
+                                                        MySize(context).h * 0.1,
+                                                  ),
+                                                  Padding(
+                                                      padding: EdgeInsets.only(
+                                                          top: MySize(context)
+                                                                  .h *
+                                                              0.04),
+                                                      child: Text(
+                                                          'Benutzername und Passwort passen nicht zueinander',
+                                                          textAlign: TextAlign
+                                                              .center)),
+                                                ]));
+                                      }
                                     }
                                   },
                                   child: Text(

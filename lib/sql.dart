@@ -51,6 +51,17 @@ class SQL {
     await connection.close();
     return (result.isEmpty) ? true : false;
   }
+
+  Future<bool> login(String username, String password) async {
+    PostgreSQLConnection connection = await connect();
+
+    List result = await connection.query(
+        'SELECT bike FROM member WHERE username = @username:text AND password = @password:text',
+        substitutionValues: {"username": username, "password": password});
+
+    await connection.close();
+    return (result.length == 1) ? true : false;
+  }
 }
 
 /* await connection.query('DROP TABLE MEMBER;');
