@@ -30,6 +30,15 @@ class SQL {
 
     await connection.close();
   }
+
+  Future<List> getMembers() async {
+    PostgreSQLConnection connection = await connect();
+
+    List result = await connection.query('SELECT * FROM member');
+
+    await connection.close();
+    return result;
+  }
 }
 
 /* await connection.query('DROP TABLE MEMBER;');
