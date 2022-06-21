@@ -40,6 +40,17 @@ class SQL {
     await connection.close();
     return result;
   }
+
+  Future<bool> isUsernameFree(String username) async {
+    PostgreSQLConnection connection = await connect();
+
+    List result = await connection.query(
+        'SELECT bike FROM member WHERE username = @username:text',
+        substitutionValues: {"username": username});
+
+    await connection.close();
+    return (result.isEmpty) ? true : false;
+  }
 }
 
 /* await connection.query('DROP TABLE MEMBER;');
