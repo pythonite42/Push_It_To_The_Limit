@@ -34,7 +34,8 @@ class SQL {
   Future<List> getMembers() async {
     PostgreSQLConnection connection = await connect();
 
-    List result = await connection.query('SELECT * FROM member');
+    List result =
+        await connection.query('SELECT * FROM member ORDER BY name ASC');
 
     await connection.close();
     return result;

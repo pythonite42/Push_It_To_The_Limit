@@ -25,7 +25,11 @@ class Mitglieder extends StatelessWidget {
       map["beschreibung"] = member[8];
       map["geschlecht"] = member[9];
       map["insta"] = member[10];
-      members.add(map);
+      if (map["username"] == "admin") {
+        members.insert(0, map);
+      } else {
+        members.add(map);
+      }
     }
     ByteData bytes = await rootBundle.load('assets/pushit_logo.png');
     Uint8List list = bytes.buffer.asUint8List();
