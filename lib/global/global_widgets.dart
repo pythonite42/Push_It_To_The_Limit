@@ -267,3 +267,23 @@ loadingDialog(context) {
     barrierDismissible: false,
   );
 }
+
+myDialog(context, Widget content) {
+  return showDialog(
+    useRootNavigator: false,
+    context: context,
+    builder: (_) {
+      return AlertDialog(
+        content: content,
+        actions: [
+          TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text("Ok", style: TextStyle(fontSize: 20)))
+        ],
+      );
+    },
+    barrierDismissible: true,
+  );
+}

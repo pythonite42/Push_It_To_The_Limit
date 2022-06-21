@@ -156,7 +156,7 @@ class _RegisterState extends State<Register> {
                             return 'Gib deinen Benutzernamen ein';
                           }
                           if (value == "admin") {
-                            return 'Der Benutzername ist ungültig';
+                            return 'Der Benutzername darf nicht "admin" lauten';
                           }
                           return null;
                         },
@@ -384,27 +384,59 @@ class _RegisterState extends State<Register> {
                               } else {
                                 if (formKey.currentState!.validate()) {
                                   formKey.currentState?.save();
-                                  SharedPreferences prefs =
-                                      await SharedPreferences.getInstance();
-                                  prefs.setBool('isLoggedIn', true);
-                                  prefs.setString('username', username);
                                   loadingDialog(context);
-                                  await SQL().registerMember({
-                                    "name": name,
-                                    "bike": bike,
-                                    "image": image,
-                                    "username": username,
-                                    "password": password,
-                                    "wohnort": wohnort,
-                                    "geburtsjahr": geburtsjahr,
-                                    "fahrstil": fahrstil,
-                                    "beschreibung": beschreibung,
-                                    "geschlecht": geschlecht,
-                                    "insta": insta
-                                  });
+                                  bool usernameFree =
+                                      await SQL().isUsernameFree(username);
                                   Navigator.of(context).pop();
-                                  Navigator.pushNamedAndRemoveUntil(context,
-                                      '/home', (Route<dynamic> route) => false);
+
+                                  if (usernameFree) {
+                                    loadingDialog(context);
+                                    SharedPreferences prefs =
+                                        await SharedPreferences.getInstance();
+                                    prefs.setBool('isLoggedIn', true);
+                                    prefs.setString('username', username);
+
+                                    await SQL().registerMember({
+                                      "name": name,
+                                      "bike": bike,
+                                      "image": image,
+                                      "username": username,
+                                      "password": password,
+                                      "wohnort": wohnort,
+                                      "geburtsjahr": geburtsjahr,
+                                      "fahrstil": fahrstil,
+                                      "beschreibung": beschreibung,
+                                      "geschlecht": geschlecht,
+                                      "insta": insta
+                                    });
+                                    Navigator.of(context).pop();
+                                    Navigator.pushNamedAndRemoveUntil(
+                                        context,
+                                        '/home',
+                                        (Route<dynamic> route) => false);
+                                  } else {
+                                    myDialog(
+                                        context,
+                                        Column(
+                                            mainAxisSize: MainAxisSize.min,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: <Widget>[
+                                              Icon(
+                                                Icons.error_outline,
+                                                color: red,
+                                                size: MySize(context).h * 0.1,
+                                              ),
+                                              Padding(
+                                                  padding: EdgeInsets.only(
+                                                      top: MySize(context).h *
+                                                          0.04),
+                                                  child: Text(
+                                                      'Dieser Benutzername ist bereits vergeben',
+                                                      textAlign:
+                                                          TextAlign.center)),
+                                            ]));
+                                  }
                                 }
                               }
                             },
