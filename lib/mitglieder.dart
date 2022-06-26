@@ -192,7 +192,6 @@ class Mitglieder extends StatelessWidget {
                               ),
                             ),
                             onTap: () {
-                              log("show profile");
                               Navigator.pushNamed(context, "/profile",
                                   arguments: data[0]);
                             },
@@ -236,7 +235,6 @@ class Mitglieder extends StatelessWidget {
                                   ),
                                 ),
                                 onTap: () {
-                                  log("show profile");
                                   Navigator.pushNamed(context, "/profile",
                                       arguments: data[i + 1]);
                                 },
