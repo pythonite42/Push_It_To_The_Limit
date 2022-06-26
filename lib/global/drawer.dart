@@ -1,19 +1,20 @@
+import 'dart:developer';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:pushit/colors.dart';
 import 'package:pushit/global/appbar.dart';
 import 'package:pushit/global/global_widgets.dart';
+import 'package:pushit/sql.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/services.dart';
 
 class MyDrawer extends StatelessWidget {
   const MyDrawer({Key? key}) : super(key: key);
 
-  Future<List> getData() async {
-    ByteData bytes = await rootBundle.load('assets/pushit_logo.png');
-    Uint8List list = bytes.buffer.asUint8List();
-    return [list, "Sarah", "Kawasaki Z400"];
+  Future<Map> getData() async {
+    Map result = await SQL().getLoggedUser();
+    return result;
   }
 
   @override
@@ -37,9 +38,9 @@ class MyDrawer extends StatelessWidget {
                       ),
                     ),
                     SpaceH(),
-                    FutureBuilder<List>(
+                    FutureBuilder<Map>(
                         future: getData(),
-                        builder: (context, AsyncSnapshot<List> snapshot) {
+                        builder: (context, AsyncSnapshot<Map> snapshot) {
                           if (snapshot.hasData) {
                             return ListTile(
                               contentPadding: EdgeInsets.only(left: 30),
@@ -48,8 +49,8 @@ class MyDrawer extends StatelessWidget {
                                 children: [
                                   CircleAvatar(
                                     radius: MySize(context).w * 0.1,
-                                    backgroundImage:
-                                        MemoryImage(snapshot.data![0]), //here
+                                    backgroundImage: MemoryImage(
+                                        snapshot.data!["image"]), //here
                                   ),
                                   SpaceW(),
                                   Expanded(
@@ -60,14 +61,14 @@ class MyDrawer extends StatelessWidget {
                                               CrossAxisAlignment.start,
                                           children: [
                                         Text(
-                                          snapshot.data![1],
+                                          snapshot.data!["name"],
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold,
                                               color: Theme.of(context)
                                                   .colorScheme
                                                   .onPrimary),
                                         ),
-                                        Text(snapshot.data![2],
+                                        Text(snapshot.data!["bike"],
                                             style: TextStyle(
                                                 color: Theme.of(context)
                                                     .colorScheme
@@ -76,7 +77,8 @@ class MyDrawer extends StatelessWidget {
                                   IconButton(
                                       onPressed: () {
                                         Navigator.pushNamed(
-                                            context, '/editProfile');
+                                            context, '/editProfile',
+                                            arguments: snapshot.data!);
                                       },
                                       icon: Icon(Icons.settings,
                                           color: Theme.of(context)
