@@ -34,11 +34,12 @@ class Mitglieder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-        height: MySize(context).h * 0.9,
-        width: MySize(context).w * 0.9,
+        height: MySize(context).h,
+        width: MySize(context).w,
         child: Opacity(
             opacity: 0.95,
-            child: Card(
+            child: Container(
+                color: Theme.of(context).colorScheme.surface,
                 child: FutureBuilder<List>(
                     future: getData(),
                     builder: (context, AsyncSnapshot<List> snapshot) {
