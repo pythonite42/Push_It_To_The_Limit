@@ -244,3 +244,46 @@ class CardLoadingFutureBuilder extends StatelessWidget {
                     ])))));
   }
 }
+
+loadingDialog(context) {
+  showDialog(
+    useRootNavigator: false,
+    context: context,
+    builder: (_) {
+      return AlertDialog(
+        content: Row(
+          children: [
+            CircularProgressIndicator(color: red),
+            SizedBox(
+              width: 20,
+            ),
+            Container(
+              child: Text("Loading ..."),
+            ),
+          ],
+        ),
+      );
+    },
+    barrierDismissible: false,
+  );
+}
+
+myDialog(context, Widget content) {
+  return showDialog(
+    useRootNavigator: false,
+    context: context,
+    builder: (_) {
+      return AlertDialog(
+        content: content,
+        actions: [
+          TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text("Ok", style: TextStyle(fontSize: 20)))
+        ],
+      );
+    },
+    barrierDismissible: true,
+  );
+}

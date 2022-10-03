@@ -50,7 +50,8 @@ class MyApp extends StatelessWidget {
         } else if (settings.name == '/register') {
           page = Register();
         } else if (settings.name == '/editProfile') {
-          page = EditProfile();
+          Map args = settings.arguments as Map;
+          page = EditProfile(userdata: args);
         } else if (settings.name == '/profile') {
           Map args = settings.arguments as Map;
           page = Profile(data: args);

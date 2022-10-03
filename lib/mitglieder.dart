@@ -5,28 +5,39 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pushit/colors.dart';
 import 'package:pushit/global/global_widgets.dart';
+import 'package:pushit/sql.dart';
 
 class Mitglieder extends StatelessWidget {
   const Mitglieder({Key? key}) : super(key: key);
 
   Future<List> getData() async {
-    await Future.delayed(Duration(seconds: 1));
+    List queryResult = await SQL().getMembers();
+    List members = [];
+    for (var member in queryResult) {
+      Map map = {};
+      map["name"] = member[0];
+      map["bike"] = member[1];
+      map["image"] = member[2];
+      map["username"] = member[3];
+      map["wohnort"] = member[5];
+      map["geburtsjahr"] = member[6];
+      map["fahrstil"] = member[7];
+      map["beschreibung"] = member[8];
+      map["geschlecht"] = member[9];
+      map["insta"] = member[10];
+      if (map["username"] == "admin") {
+        members.insert(0, map);
+      } else {
+        members.add(map);
+      }
+    }
     ByteData bytes = await rootBundle.load('assets/pushit_logo.png');
     Uint8List list = bytes.buffer.asUint8List();
-    log("FutureBUilder");
-    return [
-      {
-        "name": "Nico",
-        "bike": "Yamaha MT09",
-        "image": list,
-        "username": "admin",
-        "wohnort": "Bremen Innenstadt",
-        "geburtsjahr": 2000,
-        "fahrstil": "Rasant",
-        "beschreibung": "",
-        "geschlecht": "Keine Angabe",
-        "insta": ""
-      },
+
+    return members;
+
+    /* return [
+      
       {
         "name": "Sarah",
         "bike": "Kawasaki Z400",
@@ -124,7 +135,7 @@ class Mitglieder extends StatelessWidget {
         "geschlecht": "Keine Angabe",
         "insta": ""
       }
-    ];
+    ];*/
   }
 
   @override
@@ -181,7 +192,6 @@ class Mitglieder extends StatelessWidget {
                               ),
                             ),
                             onTap: () {
-                              log("show profile");
                               Navigator.pushNamed(context, "/profile",
                                   arguments: data[0]);
                             },
@@ -225,7 +235,6 @@ class Mitglieder extends StatelessWidget {
                                   ),
                                 ),
                                 onTap: () {
-                                  log("show profile");
                                   Navigator.pushNamed(context, "/profile",
                                       arguments: data[i + 1]);
                                 },
