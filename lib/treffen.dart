@@ -361,7 +361,6 @@ class Treffen extends StatelessWidget {
       useRootNavigator: false,
       context: context,
       builder: (_) {
-        log(participants.length.toString());
         return AlertDialog(
           title: Text("Teilnehmer"),
           content: SizedBox(
