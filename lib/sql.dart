@@ -46,7 +46,6 @@ class SQL {
     PostgreSQLConnection connection = await connect();
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String username = prefs.getString('username') ?? "";
-    log("úsername: $username");
     List member = await connection.query(
         'SELECT * FROM member WHERE username = @username:text',
         substitutionValues: {"username": username});
@@ -95,19 +94,10 @@ class SQL {
     PostgreSQLConnection connection = await connect();
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String oldusername = prefs.getString('username') ?? "";
-    String bike = "Suzuki fztvdfghjkl";
-    log("update to username: ${values["username"]}");
     var password = await connection.query(
         'SELECT password FROM member WHERE username = @username:text',
         substitutionValues: {"username": oldusername});
     values["password"] = password.toString();
-    log(values["password"].toString());
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    //GO ON HERE
-    // it does not delete the old entry -> fix this, please
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
     await connection.query('DELETE FROM member WHERE username = @username:text',
         substitutionValues: {"username": oldusername});
     await connection.query("""INSERT INTO member 
@@ -125,71 +115,7 @@ class SQL {
         @geschlecht:text,
         @insta:text)""", substitutionValues: values);
 
-    /* await connection.query(
-        "UPDATE member SET bike = @bike:text WHERE username=@username:text",
-        substitutionValues: {"username": values["oldusername"], "bike": bike});
-    
-
-        await connection.query("""UPDATE member SET 
-      name = @name:text,
-      bike = @bike:text,
-      image = @image:bytea,
-      username = @username:text,
-      wohnort = @wohnort:text,
-      geburtsjahr = @geburtsjahr:int4,
-      fahrstil = @fahrstil:text,
-      beschreibung = @beschreibung:text,
-      geschlecht = @geschlecht:text,
-      insta = @insta:text
-      WHERE username = @oldusername:text
-      """, substitutionValues: values);*/
-    List members = await connection.query('SELECT username FROM member');
-    log(members.toString());
     await prefs.setString("username", values["username"]);
     await connection.close();
   }
 }
-
-/* await connection.query('DROP TABLE MEMBER;');
-    await connection.query("""CREATE TABLE MEMBER(
-          ID INT PRIMARY KEY NOT NULL, 
-          NAME TEXT NOT NULL, 
-          BIKE TEXT NOT NULL, 
-          IMAGE BYTEA NOT NULL,
-          USERNAME TEXT NOT NULL,
-          PASSWORD TEXT NOT NULL,
-          WOHNORT TEXT,
-          GEBURTSJAHR INT,
-          FAHRSTIL TEXT,
-          BESCHREIBUNG TEXT,
-          GESCHLECHT TEXT,
-          INSTA TEXT);""");
-
-           ByteData bytes = await rootBundle.load('assets/pushit_logo.png');
-    Uint8List image = bytes.buffer.asUint8List();
-await connection.query(
-        "INSERT INTO member (ID,NAME,BIKE,IMAGE,USERNAME,PASSWORD) VALUES (1, 'Nico Hauswald', 'MT09', @a:bytea, 'nico_hauswald','np')",
-        substitutionValues: {
-          "a": image,
-        });
-        
-  await connection.query(
-        "INSERT INTO MEMBER (ID,NAME,BIKE,USERNAME,PASSWORD) VALUES (2, 'Nico Hauswald', 'MT09', 'nico_hauswald','np');");*/
-
-/*
--> Möglichst wenig connections machen aber viel daten gleichzeitig abfragen
-
-Stopwatch stopwatch = Stopwatch()..start();
-    var result = await connection.query('SELECT * FROM member;');
-    stopwatch.stop();
-    log(result.toString());
-    log("Await Dauer ${stopwatch.elapsed}");
-    Stopwatch stopwatch_two = Stopwatch()..start();
-    for (var i = 0; i < 21; i++) {
-      var result_two = await connection
-          .query('SELECT * FROM member WHERE id = ' + i.toString() + ';');
-    }
-
-    stopwatch.stop();
-    //log(result_two.toString());
-    log("Await Dauer 2 ${stopwatch_two.elapsed}"); */
