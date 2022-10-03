@@ -1,8 +1,4 @@
-import 'dart:developer';
-import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:pushit/colors.dart';
 import 'package:pushit/global/global_widgets.dart';
 import 'package:pushit/sql.dart';
@@ -31,8 +27,6 @@ class Mitglieder extends StatelessWidget {
         members.add(map);
       }
     }
-    ByteData bytes = await rootBundle.load('assets/pushit_logo.png');
-    Uint8List list = bytes.buffer.asUint8List();
 
     return members;
   }
