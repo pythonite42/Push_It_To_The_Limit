@@ -158,10 +158,11 @@ class Treffen extends StatelessWidget {
               if (snapshot.hasData) {
                 var data = snapshot.data!;
                 return Column(children: [
+                  SpaceH(0.02),
                   for (var i = 0; i < data.length; i++)
                     Column(children: [
                       SizedBox(
-                          width: MySize(context).w * 0.8,
+                          width: MySize(context).w * 0.9,
                           child: Opacity(
                               opacity: 0.95,
                               child: Card(
@@ -339,8 +340,8 @@ class Treffen extends StatelessWidget {
                         if (data[i]["admin"] == true &&
                             data[i + 1]["admin"] == false)
                           Divider(
-                            indent: MySize(context).w * 0.1,
-                            endIndent: MySize(context).w * 0.1,
+                            indent: MySize(context).w * 0.05,
+                            endIndent: MySize(context).w * 0.05,
                             thickness: 3,
                             color: red,
                           ),
