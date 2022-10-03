@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:pushit/colors.dart';
 import 'package:pushit/global/global_widgets.dart';
 
-class Chat extends StatelessWidget {
-  const Chat({Key? key}) : super(key: key);
+class ChatOverview extends StatelessWidget {
+  const ChatOverview({Key? key}) : super(key: key);
 
   Future<List> getChats() async {
     await Future.delayed(Duration(seconds: 1));
@@ -83,7 +83,13 @@ class Chat extends StatelessWidget {
                                             size: MySize(context).h * 0.05,
                                           )
                                         ])),
-                                onTap: () {},
+                                onTap: () {
+                                  Navigator.pushNamed(context, "/chat",
+                                      arguments: {
+                                        "id": 1234,
+                                        "name": "Push It TALK"
+                                      });
+                                },
                               ),
                               Divider(
                                   thickness: 1,
@@ -115,7 +121,7 @@ class Chat extends StatelessWidget {
                                                       style: TextStyle(
                                                           fontWeight:
                                                               FontWeight.bold,
-                                                          fontSize: 20),
+                                                          fontSize: 18),
                                                     ),
                                                     Padding(
                                                         padding: EdgeInsets.symmetric(

@@ -141,24 +141,21 @@ class WholeScreenLoadingFutureBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-        height: (MediaQuery.of(context).orientation == Orientation.portrait)
-            ? MySize(context).h * 0.95
-            : MySize(context).h * 0.8,
         child: Center(
             child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-              SizedBox(
-                width: MySize(context).h * 0.1,
-                height: MySize(context).h * 0.1,
-                child: CircularProgressIndicator(
-                  color: red,
-                ),
-              ),
-              Padding(
-                  padding: EdgeInsets.only(top: MySize(context).h * 0.04),
-                  child: Text('Loading ...', textAlign: TextAlign.center)),
-            ])));
+          SizedBox(
+            width: MySize(context).h * 0.1,
+            height: MySize(context).h * 0.1,
+            child: CircularProgressIndicator(
+              color: red,
+            ),
+          ),
+          Padding(
+              padding: EdgeInsets.only(top: MySize(context).h * 0.04),
+              child: Text('Loading ...', textAlign: TextAlign.center)),
+        ])));
   }
 }
 
@@ -168,20 +165,19 @@ class WholeScreenErrorFutureBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-        height: MySize(context).h * 0.95,
         child: Center(
             child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-              Icon(
-                Icons.error_outline,
-                color: red,
-                size: MySize(context).h * 0.1,
-              ),
-              Padding(
-                  padding: EdgeInsets.only(top: MySize(context).h * 0.04),
-                  child: Text('Server-Fehler', textAlign: TextAlign.center)),
-            ])));
+          Icon(
+            Icons.error_outline,
+            color: red,
+            size: MySize(context).h * 0.1,
+          ),
+          Padding(
+              padding: EdgeInsets.only(top: MySize(context).h * 0.04),
+              child: Text('Server-Fehler', textAlign: TextAlign.center)),
+        ])));
   }
 }
 

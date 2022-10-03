@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:pushit/chat/chat.dart';
 import 'package:pushit/colors.dart';
 import 'package:pushit/dm.dart';
 import 'package:pushit/edit_profile.dart';
@@ -55,6 +56,9 @@ class MyApp extends StatelessWidget {
         } else if (settings.name == '/profile') {
           Map args = settings.arguments as Map;
           page = Profile(data: args);
+        } else if (settings.name == '/chat') {
+          Map args = settings.arguments as Map;
+          page = Chat(chatAttributes: args);
         } else {
           page = HomePage();
         }
