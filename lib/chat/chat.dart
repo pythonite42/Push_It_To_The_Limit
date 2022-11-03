@@ -1,184 +1,133 @@
+import 'dart:convert';
+import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
+import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 import 'package:pushit/colors.dart';
-import 'package:pushit/global/appbar.dart';
-import 'package:pushit/global/global_widgets.dart';
+import 'package:pushit/sql.dart';
+import 'package:uuid/uuid.dart';
 
-class Chat extends StatelessWidget {
-  const Chat({Key? key, required this.chatAttributes}) : super(key: key);
+// For the testing purposes, you should probably use https://pub.dev/packages/uuid.
+String randomString() {
+  final random = Random.secure();
+  final values = List<int>.generate(16, (i) => random.nextInt(255));
+  return base64UrlEncode(values);
+}
+
+class ChatPage extends StatefulWidget {
+  const ChatPage({Key? key, required this.chatAttributes}) : super(key: key);
   final Map chatAttributes;
 
-  Future<List> getData() async {
-    await Future.delayed(Duration(seconds: 1));
-    return [1, 2, 3, 4, 4, 4, 4, 4, 4];
+  @override
+  State<ChatPage> createState() => _ChatPageState();
+}
+
+class _ChatPageState extends State<ChatPage> {
+  List<types.Message> messages = [];
+  types.User user = types.User(id: Uuid().v4());
+
+  @override
+  void initState() {
+    super.initState();
+    () async {
+      Map userData = await SQL().getLoggedUser();
+      types.User tempUser = types.User(
+        id: userData["username"],
+        firstName: userData["name"],
+      );
+      final textMessage = types.TextMessage(
+        author: tempUser,
+        createdAt: DateTime.now().millisecondsSinceEpoch,
+        id: randomString(),
+        text: "This text is from the user that is logged in",
+      );
+
+      setState(() {
+        user = tempUser;
+        messages.insert(0, textMessage);
+      });
+    }();
+    for (var i = 0; i < 100; i++) {
+      types.Message message = types.TextMessage(
+        author: types.User(
+          id: (i % 16).toString(),
+          firstName: "Tony",
+        ),
+        createdAt: DateTime.now().millisecondsSinceEpoch,
+        id: randomString(),
+        text: "This is message number" +
+            i.toString() +
+            "from User number" +
+            (i % 16).toString(),
+      );
+      messages.add(message);
+    }
+    types.Message message = types.TextMessage(
+        author: types.User(id: "0"),
+        createdAt: DateTime.now().millisecondsSinceEpoch,
+        id: randomString(),
+        text: "hi");
+    messages.insert(0, message);
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: MyAppBar(
-          showDM: false,
-          heading: chatAttributes["name"],
+  Widget build(BuildContext context) => Scaffold(
+        body: Chat(
+          messages: messages,
+          onSendPressed: _handleSendPressed,
+          user: user,
+          theme: DefaultChatTheme(
+            inputBackgroundColor: Color.fromARGB(255, 62, 62, 62),
+            primaryColor: red,
+            backgroundColor: Color.fromARGB(255, 27, 27, 27),
+            inputTextCursorColor: red,
+            inputTextColor: Theme.of(context).colorScheme.surface,
+            errorColor: brightRed,
+            secondaryColor: Color.fromARGB(255, 62, 62, 62),
+            sentMessageDocumentIconColor: red,
+            userAvatarNameColors: const [
+              Color.fromARGB(255, 223, 10, 10),
+              Color.fromARGB(255, 223, 145, 10),
+              Color.fromARGB(255, 251, 239, 14),
+              Color.fromARGB(255, 212, 223, 10),
+              Color.fromARGB(255, 170, 223, 10),
+              Color.fromARGB(255, 92, 223, 10),
+              Color.fromARGB(255, 26, 183, 21),
+              Color.fromARGB(255, 10, 223, 181),
+              Color.fromARGB(255, 10, 191, 223),
+              Color.fromARGB(255, 10, 134, 223),
+              Color.fromARGB(255, 144, 34, 254),
+              Color.fromARGB(255, 184, 10, 223),
+              Color.fromARGB(255, 223, 10, 195),
+              Color.fromARGB(255, 194, 28, 106),
+            ],
+            receivedMessageDocumentIconColor: red,
+            receivedMessageBodyTextStyle: DefaultChatTheme()
+                .receivedMessageBodyTextStyle
+                .copyWith(color: Theme.of(context).colorScheme.surface),
+            sentMessageBodyTextStyle: DefaultChatTheme()
+                .sentMessageBodyTextStyle
+                .copyWith(color: Theme.of(context).colorScheme.surface),
+          ),
+          showUserAvatars: true,
+          showUserNames: true,
         ),
-        body: SizedBox(
-            child: Opacity(
-                opacity: 0.95,
-                child: Container(
-                    color: Theme.of(context).colorScheme.surface,
-                    child: FutureBuilder<List>(
-                        future: getData(),
-                        builder: (context, AsyncSnapshot<List> snapshot) {
-                          if (snapshot.hasData) {
-                            var data = snapshot.data!;
-                            return SingleChildScrollView(
-                                child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                  SpaceH(0.02),
-                                  InkWell(
-                                    child: Padding(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal:
-                                                MySize(context).w * 0.05,
-                                            vertical:
-                                                MySize(context).w * 0.025),
-                                        child: Row(
-                                            mainAxisSize: MainAxisSize.max,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Column(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    Text(
-                                                      "Push It TALK",
-                                                      style: TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          fontSize: 20),
-                                                    ),
-                                                    Padding(
-                                                        padding: EdgeInsets.symmetric(
-                                                            horizontal:
-                                                                MySize(context)
-                                                                        .w *
-                                                                    0.025,
-                                                            vertical:
-                                                                MySize(context)
-                                                                        .w *
-                                                                    0.025),
-                                                        child: Column(
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .start,
-                                                            children: const [
-                                                              Text("Sarah:",
-                                                                  style: TextStyle(
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .bold)),
-                                                              Text(
-                                                                  "Text Bla Bla ",
-                                                                  style:
-                                                                      TextStyle())
-                                                            ]))
-                                                  ]),
-                                              Icon(
-                                                Icons.chevron_right,
-                                                size: MySize(context).h * 0.05,
-                                              )
-                                            ])),
-                                    onTap: () {
-                                      Navigator.pushNamed(context, "/chat",
-                                          arguments: "1234");
-                                    },
-                                  ),
-                                  Divider(
-                                      thickness: 1,
-                                      indent: MySize(context).w * 0.05,
-                                      endIndent: MySize(context).w * 0.05,
-                                      color: black),
-                                  for (var i = 0; i < data.length - 1; i++)
-                                    Column(children: [
-                                      InkWell(
-                                        child: Padding(
-                                            padding: EdgeInsets.symmetric(
-                                                horizontal:
-                                                    MySize(context).w * 0.05,
-                                                vertical:
-                                                    MySize(context).w * 0.025),
-                                            child: Row(
-                                                mainAxisSize: MainAxisSize.max,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  Column(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        Text(
-                                                          "Push It TALK",
-                                                          style: TextStyle(
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                              fontSize: 18),
-                                                        ),
-                                                        Padding(
-                                                            padding: EdgeInsets.symmetric(
-                                                                horizontal:
-                                                                    MySize(context)
-                                                                            .w *
-                                                                        0.025,
-                                                                vertical:
-                                                                    MySize(context)
-                                                                            .w *
-                                                                        0.025),
-                                                            child: Column(
-                                                                crossAxisAlignment:
-                                                                    CrossAxisAlignment
-                                                                        .start,
-                                                                children: const [
-                                                                  Text("Sarah:",
-                                                                      style: TextStyle(
-                                                                          fontWeight:
-                                                                              FontWeight.bold)),
-                                                                  Text(
-                                                                      "Text Bla Bla ",
-                                                                      style:
-                                                                          TextStyle())
-                                                                ]))
-                                                      ]),
-                                                  Icon(
-                                                    Icons.chevron_right,
-                                                    size: MySize(context).h *
-                                                        0.05,
-                                                  )
-                                                ])),
-                                        onTap: () {},
-                                      ),
-                                      if (i != data.length - 2)
-                                        Divider(
-                                          thickness: 1,
-                                          indent: MySize(context).w * 0.05,
-                                          endIndent: MySize(context).w * 0.05,
-                                        ),
-                                    ]),
-                                  SpaceH(0.01),
-                                ]));
-                          } else if (snapshot.hasError) {
-                            return WholeScreenErrorFutureBuilder();
-                          } else {
-                            return WholeScreenLoadingFutureBuilder();
-                          }
-                        })))));
+      );
+
+  void _addMessage(types.Message message) {
+    setState(() {
+      messages.insert(0, message);
+    });
+  }
+
+  void _handleSendPressed(types.PartialText message) {
+    final textMessage = types.TextMessage(
+      author: user,
+      createdAt: DateTime.now().millisecondsSinceEpoch,
+      id: randomString(),
+      text: message.text,
+    );
+
+    _addMessage(textMessage);
   }
 }
