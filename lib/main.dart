@@ -58,7 +58,7 @@ class MyApp extends StatelessWidget {
           page = Profile(data: args);
         } else if (settings.name == '/chat') {
           Map args = settings.arguments as Map;
-          page = Chat(chatAttributes: args);
+          page = ChatPage(chatAttributes: args);
         } else {
           page = HomePage();
         }
