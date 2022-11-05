@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 import 'package:flutter_chat_ui/flutter_chat_ui.dart';
+import 'package:intl/intl.dart';
 import 'package:pushit/colors.dart';
 import 'package:pushit/sql.dart';
 import 'package:uuid/uuid.dart';
@@ -34,7 +35,7 @@ class _ChatPageState extends State<ChatPage> {
       types.User tempUser = types.User(
         id: userData["username"],
         firstName: userData["name"],
-      );
+          imageUrl: 'https://picsum.photos/250?image=9');
       final textMessage = types.TextMessage(
         author: tempUser,
         createdAt: DateTime.now().millisecondsSinceEpoch,
@@ -52,18 +53,21 @@ class _ChatPageState extends State<ChatPage> {
         author: types.User(
           id: (i % 16).toString(),
           firstName: "Tony",
-        ),
+            imageUrl: 'https://picsum.photos/250?image=9'),
         createdAt: DateTime.now().millisecondsSinceEpoch,
         id: randomString(),
-        text: "This is message number" +
+        text: "This is message number " +
             i.toString() +
-            "from User number" +
+            " from User number " +
             (i % 16).toString(),
       );
       messages.add(message);
     }
     types.Message message = types.TextMessage(
-        author: types.User(id: "0"),
+        author: types.User(
+            id: "0",
+            firstName: "Tony",
+            imageUrl: 'https://picsum.photos/250?image=9'),
         createdAt: DateTime.now().millisecondsSinceEpoch,
         id: randomString(),
         text: "hi");
@@ -111,6 +115,8 @@ class _ChatPageState extends State<ChatPage> {
           ),
           showUserAvatars: true,
           showUserNames: true,
+          dateLocale: 'DE',
+          timeFormat: DateFormat.Hm(),
         ),
       );
 
