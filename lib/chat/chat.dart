@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 import 'package:flutter_chat_ui/flutter_chat_ui.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:pushit/colors.dart';
 import 'package:pushit/sql.dart';
@@ -33,8 +34,8 @@ class _ChatPageState extends State<ChatPage> {
     () async {
       Map userData = await SQL().getLoggedUser();
       types.User tempUser = types.User(
-        id: userData["username"],
-        firstName: userData["name"],
+          id: userData["username"],
+          firstName: userData["name"],
           imageUrl: 'https://picsum.photos/250?image=9');
       final textMessage = types.TextMessage(
         author: tempUser,
@@ -51,8 +52,8 @@ class _ChatPageState extends State<ChatPage> {
     for (var i = 0; i < 100; i++) {
       types.Message message = types.TextMessage(
         author: types.User(
-          id: (i % 16).toString(),
-          firstName: "Tony",
+            id: (i % 16).toString(),
+            firstName: "Tony",
             imageUrl: 'https://picsum.photos/250?image=9'),
         createdAt: DateTime.now().millisecondsSinceEpoch,
         id: randomString(),
@@ -74,12 +75,39 @@ class _ChatPageState extends State<ChatPage> {
     messages.insert(0, message);
   }
 
+  void _handleImageSelection() async {
+    final result = await ImagePicker().pickImage(
+      imageQuality: 70,
+      maxWidth: 1440,
+      source: ImageSource.gallery,
+    );
+
+    if (result != null) {
+      final bytes = await result.readAsBytes();
+      final image = await decodeImageFromList(bytes);
+
+      final message = types.ImageMessage(
+        author: user,
+        createdAt: DateTime.now().millisecondsSinceEpoch,
+        height: image.height.toDouble(),
+        id: randomString(),
+        name: result.name,
+        size: bytes.length,
+        uri: result.path,
+        width: image.width.toDouble(),
+      );
+
+      _addMessage(message);
+    }
+  }
+
   @override
   Widget build(BuildContext context) => Scaffold(
         body: Chat(
           messages: messages,
           onSendPressed: _handleSendPressed,
           user: user,
+          onAttachmentPressed: _handleImageSelection,
           theme: DefaultChatTheme(
             inputBackgroundColor: Color.fromARGB(255, 62, 62, 62),
             primaryColor: red,
@@ -112,6 +140,8 @@ class _ChatPageState extends State<ChatPage> {
             sentMessageBodyTextStyle: DefaultChatTheme()
                 .sentMessageBodyTextStyle
                 .copyWith(color: Theme.of(context).colorScheme.surface),
+            inputMargin: EdgeInsets.all(10),
+            inputBorderRadius: const BorderRadius.all(Radius.circular(10)),
           ),
           showUserAvatars: true,
           showUserNames: true,
