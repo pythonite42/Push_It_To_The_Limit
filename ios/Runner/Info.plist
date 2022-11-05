@@ -43,5 +43,10 @@
 	<false/>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Hochladen eines Profilbilds</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+	<string>https</string>
+	<string>http</string>
+	</array>
 </dict>
 </plist>
