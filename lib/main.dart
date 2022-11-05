@@ -9,6 +9,7 @@ import 'package:pushit/main_layout.dart';
 import 'package:pushit/profile.dart';
 import 'package:pushit/register.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,6 +17,7 @@ void main() async {
   var status = prefs.getBool('isLoggedIn') ?? false;
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitDown, DeviceOrientation.portraitUp]);
+  await initializeDateFormatting();
   runApp(MyApp(home: status == true ? HomePage() : Login()));
 }
 
