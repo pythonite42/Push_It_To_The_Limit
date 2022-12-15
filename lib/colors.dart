@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 
 MaterialColor blackMaterial = const MaterialColor(
   0xFF000000,
@@ -118,3 +119,41 @@ MaterialColor lightGreyMaterial = const MaterialColor(
   },
 );
 Color lightGrey = const Color(0xFFdcdcda);
+
+ChatTheme myChatTheme(BuildContext context, Color inputBackgroundColor) {
+  return DefaultChatTheme(
+    inputBackgroundColor: inputBackgroundColor,
+    primaryColor: red,
+    backgroundColor: Color.fromARGB(255, 27, 27, 27),
+    inputTextCursorColor: red,
+    inputTextColor: Theme.of(context).colorScheme.surface,
+    errorColor: brightRed,
+    secondaryColor: Color.fromARGB(255, 62, 62, 62),
+    sentMessageDocumentIconColor: red,
+    userAvatarNameColors: const [
+      Color.fromARGB(255, 223, 10, 10),
+      Color.fromARGB(255, 223, 145, 10),
+      Color.fromARGB(255, 251, 239, 14),
+      Color.fromARGB(255, 212, 223, 10),
+      Color.fromARGB(255, 170, 223, 10),
+      Color.fromARGB(255, 92, 223, 10),
+      Color.fromARGB(255, 26, 183, 21),
+      Color.fromARGB(255, 10, 223, 181),
+      Color.fromARGB(255, 10, 191, 223),
+      Color.fromARGB(255, 10, 134, 223),
+      Color.fromARGB(255, 144, 34, 254),
+      Color.fromARGB(255, 184, 10, 223),
+      Color.fromARGB(255, 223, 10, 195),
+      Color.fromARGB(255, 194, 28, 106),
+    ],
+    receivedMessageDocumentIconColor: red,
+    receivedMessageBodyTextStyle: DefaultChatTheme()
+        .receivedMessageBodyTextStyle
+        .copyWith(color: Theme.of(context).colorScheme.surface),
+    sentMessageBodyTextStyle: DefaultChatTheme()
+        .sentMessageBodyTextStyle
+        .copyWith(color: Theme.of(context).colorScheme.surface),
+    inputMargin: EdgeInsets.all(10),
+    inputBorderRadius: const BorderRadius.all(Radius.circular(10)),
+  );
+}

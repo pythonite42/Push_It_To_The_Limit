@@ -1,4 +1,5 @@
 import 'dart:developer';
+
 import 'package:postgres/postgres.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -116,6 +117,19 @@ class SQL {
         @insta:text)""", substitutionValues: values);
 
     await prefs.setString("username", values["username"]);
+    await connection.close();
+  }
+
+  addMessage(Map message, String chat) async {
+    PostgreSQLConnection connection = await connect();
+    log(message.toString());
+    await connection.query("""INSERT INTO message 
+        (CHAT,MESSAGE) 
+        VALUES 
+        (@chat:text, 
+        @message:text, 
+        )""",
+        substitutionValues: {"chat": chat, "message": message.toString()});
     await connection.close();
   }
 }
