@@ -187,60 +187,13 @@ class _ChatPageState extends State<ChatPage> {
     }
   }
 
-  @override
-  Widget build(BuildContext context) => Scaffold(
-        body: Chat(
-          messages: messages,
-          onSendPressed: _handleSendPressed,
-          user: user,
-          onMessageTap: _handleMessageTap,
-          onAttachmentPressed: _handleAttachmentPressed,
-          theme: DefaultChatTheme(
-            inputBackgroundColor: inputBackgroundColor,
-            primaryColor: red,
-            backgroundColor: Color.fromARGB(255, 27, 27, 27),
-            inputTextCursorColor: red,
-            inputTextColor: Theme.of(context).colorScheme.surface,
-            errorColor: brightRed,
-            secondaryColor: Color.fromARGB(255, 62, 62, 62),
-            sentMessageDocumentIconColor: red,
-            userAvatarNameColors: const [
-              Color.fromARGB(255, 223, 10, 10),
-              Color.fromARGB(255, 223, 145, 10),
-              Color.fromARGB(255, 251, 239, 14),
-              Color.fromARGB(255, 212, 223, 10),
-              Color.fromARGB(255, 170, 223, 10),
-              Color.fromARGB(255, 92, 223, 10),
-              Color.fromARGB(255, 26, 183, 21),
-              Color.fromARGB(255, 10, 223, 181),
-              Color.fromARGB(255, 10, 191, 223),
-              Color.fromARGB(255, 10, 134, 223),
-              Color.fromARGB(255, 144, 34, 254),
-              Color.fromARGB(255, 184, 10, 223),
-              Color.fromARGB(255, 223, 10, 195),
-              Color.fromARGB(255, 194, 28, 106),
-            ],
-            receivedMessageDocumentIconColor: red,
-            receivedMessageBodyTextStyle: DefaultChatTheme()
-                .receivedMessageBodyTextStyle
-                .copyWith(color: Theme.of(context).colorScheme.surface),
-            sentMessageBodyTextStyle: DefaultChatTheme()
-                .sentMessageBodyTextStyle
-                .copyWith(color: Theme.of(context).colorScheme.surface),
-            inputMargin: EdgeInsets.all(10),
-            inputBorderRadius: const BorderRadius.all(Radius.circular(10)),
-          ),
-          showUserAvatars: true,
-          showUserNames: true,
-          dateLocale: 'DE',
-          timeFormat: DateFormat.Hm(),
-        ),
-      );
-
   void _addMessage(types.Message message) {
     setState(() {
       messages.insert(0, message);
     });
+    var jsonMsg = message.toJson();
+    print(jsonMsg);
+    SQL().addMessage(jsonMsg, "Push It Talk");
   }
 
   void _handleSendPressed(types.PartialText message) {
@@ -252,5 +205,23 @@ class _ChatPageState extends State<ChatPage> {
     );
 
     _addMessage(textMessage);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Chat(
+        messages: messages,
+        onSendPressed: _handleSendPressed,
+        user: user,
+        onMessageTap: _handleMessageTap,
+        onAttachmentPressed: _handleAttachmentPressed,
+        theme: myChatTheme(context, inputBackgroundColor),
+        showUserAvatars: true,
+        showUserNames: true,
+        dateLocale: 'DE',
+        timeFormat: DateFormat.Hm(),
+      ),
+    );
   }
 }
