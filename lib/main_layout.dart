@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pushit/global/appbar.dart';
 import 'package:pushit/chat/overview.dart';
-import 'package:pushit/colors.dart';
 import 'package:pushit/global/drawer.dart';
 import 'package:pushit/mitglieder.dart';
 import 'package:pushit/treffen.dart';

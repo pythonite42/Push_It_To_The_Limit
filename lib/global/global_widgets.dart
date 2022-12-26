@@ -23,6 +23,7 @@ class MySize {
 }
 
 class SpaceH extends StatelessWidget {
+  // ignore: use_key_in_widget_constructors
   const SpaceH([this.height = 0.05]);
   final double height;
 
@@ -34,6 +35,7 @@ class SpaceH extends StatelessWidget {
 }
 
 class SpaceW extends StatelessWidget {
+  // ignore: use_key_in_widget_constructors
   const SpaceW([this.width = 0.05]);
   final double width;
 
@@ -44,6 +46,7 @@ class SpaceW extends StatelessWidget {
   }
 }
 
+// ignore: must_be_immutable
 class Heading extends StatelessWidget {
   Heading({Key? key, required this.label, this.padding = 1}) : super(key: key);
   final String label;
@@ -113,6 +116,7 @@ class RegisterRow extends StatelessWidget {
   final String label;
   final FormFieldValidator<String>? validator;
   final void Function(String?) onSaved;
+  // ignore: prefer_typing_uninitialized_variables
   final initialValue;
   @override
   Widget build(BuildContext context) {
@@ -253,9 +257,7 @@ loadingDialog(context) {
             SizedBox(
               width: 20,
             ),
-            Container(
-              child: Text("Loading ..."),
-            ),
+            Text("Loading ..."),
           ],
         ),
       );

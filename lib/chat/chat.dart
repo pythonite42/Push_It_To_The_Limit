@@ -37,9 +37,10 @@ class _ChatPageState extends State<ChatPage> {
     () async {
       Map userData = await SQL().getLoggedUser();
       types.User tempUser = types.User(
-          id: userData["username"],
-          firstName: userData["name"],
-          imageUrl: 'https://picsum.photos/250?image=9');
+        id: userData["username"],
+        firstName: userData["name"],
+        //imageUrl: 'https://picsum.photos/250?image=9'
+      );
       final textMessage = types.TextMessage(
         author: tempUser,
         createdAt: DateTime.now().millisecondsSinceEpoch,
@@ -55,9 +56,10 @@ class _ChatPageState extends State<ChatPage> {
     for (var i = 0; i < 100; i++) {
       types.Message message = types.TextMessage(
         author: types.User(
-            id: (i % 16).toString(),
-            firstName: "Tony",
-            imageUrl: 'https://picsum.photos/250?image=9'),
+          id: (i % 16).toString(),
+          firstName: "Tony",
+          //imageUrl: 'https://picsum.photos/250?image=9'
+        ),
         createdAt: DateTime.now().millisecondsSinceEpoch,
         id: randomString(),
         text: "This is message number " +
@@ -69,9 +71,10 @@ class _ChatPageState extends State<ChatPage> {
     }
     types.Message message = types.TextMessage(
         author: types.User(
-            id: "0",
-            firstName: "Tony",
-            imageUrl: 'https://picsum.photos/250?image=9'),
+          id: "0",
+          firstName: "Tony",
+          //imageUrl: 'https://picsum.photos/250?image=9'
+        ),
         createdAt: DateTime.now().millisecondsSinceEpoch,
         id: randomString(),
         text: "hi");
