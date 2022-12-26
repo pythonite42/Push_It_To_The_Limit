@@ -5,7 +5,7 @@ import 'package:pushit/sql.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Login extends StatefulWidget {
-  Login({Key? key}) : super(key: key);
+  const Login({Key? key}) : super(key: key);
 
   @override
   State<Login> createState() => _LoginState();
@@ -27,7 +27,7 @@ class _LoginState extends State<Login> {
           backgroundColor: Colors.transparent,
           body: GestureDetector(
             onTap: () {
-              FocusScope.of(context).requestFocus(new FocusNode());
+              FocusScope.of(context).requestFocus(FocusNode());
             },
             child: Center(
                 child: Opacity(

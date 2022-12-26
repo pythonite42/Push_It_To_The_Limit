@@ -1,5 +1,3 @@
-import 'dart:developer';
-import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
@@ -22,7 +20,7 @@ class EditProfile extends StatelessWidget {
         appBar: MyAppBar(),
         body: GestureDetector(
             onTap: () {
-              FocusScope.of(context).requestFocus(new FocusNode());
+              FocusScope.of(context).requestFocus(FocusNode());
             },
             child: SingleChildScrollView(
                 child: Container(
@@ -242,6 +240,7 @@ class _EditProfileFormState extends State<EditProfileForm> {
                                       valInt < 1970) {
                                     return "$value ist kein gültiges Geburtsdatum";
                                   }
+                                  return null;
                                 },
                                 onSaved: (String? value) {
                                   try {
@@ -455,7 +454,7 @@ class _EditProfileFormState extends State<EditProfileForm> {
                           BoxConstraints(minWidth: MySize(context).w * 0.3),
                       child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                              primary: Colors.white,
+                              backgroundColor: Colors.white,
                               side: BorderSide(
                                 width: 2.0,
                                 color: red,

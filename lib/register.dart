@@ -1,4 +1,3 @@
-import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
@@ -35,7 +34,7 @@ class _RegisterState extends State<Register> {
     return Scaffold(
         body: GestureDetector(
             onTap: () {
-              FocusScope.of(context).requestFocus(new FocusNode());
+              FocusScope.of(context).requestFocus(FocusNode());
             },
             child: SingleChildScrollView(
                 child: Container(
@@ -236,6 +235,7 @@ class _RegisterState extends State<Register> {
                                         valInt < 1970) {
                                       return "$value ist kein gültiges Geburtsdatum";
                                     }
+                                    return null;
                                   },
                                   onSaved: (String? value) {
                                     setState(() {
