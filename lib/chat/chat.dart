@@ -8,6 +8,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:open_filex/open_filex.dart';
 import 'package:pushit/colors.dart';
+import 'package:pushit/global/appbar.dart';
 import 'package:pushit/sql.dart';
 import 'package:uuid/uuid.dart';
 
@@ -213,6 +214,10 @@ class _ChatPageState extends State<ChatPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: MyAppBar(
+        showDM: false,
+        heading: widget.chatAttributes["name"],
+      ),
       body: Chat(
         messages: messages,
         onSendPressed: _handleSendPressed,
