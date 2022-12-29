@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:flutter_chat_types/flutter_chat_types.dart';
 import 'package:postgres/postgres.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -120,9 +119,9 @@ class SQL {
     await connection.close();
   }
 
-  addMessage(Message message, String chat) async {
+  Future<String?> addMessage(Message message, String chat) async {
     PostgreSQLConnection connection = await connect();
-    log(message.toString());
+    String? messageID;
 
     if (message.type == MessageType.text) {
       // message always was created like this: TextMessage(
@@ -145,6 +144,13 @@ class SQL {
         "created_at": message.createdAt,
         "content": message.text
       });
+      var result = await connection.query(
+          'SELECT id FROM message WHERE username = @username:text ORDER BY created_at DESC',
+          substitutionValues: {"username": message.author.id});
+      try {
+        messageID = result[0][0].toString();
+        print(messageID);
+      } catch (_) {}
     }
 
     // if (type == MessageType.audio) { await connection.query(...);}
@@ -156,9 +162,11 @@ class SQL {
     // if (type == MessageType.video) { await connection.query(...);}
 
     await connection.close();
+    return messageID;
   }
 
   void query() async {
+    // return;
     PostgreSQLConnection connection = await connect();
 
     List result = await connection.query(
