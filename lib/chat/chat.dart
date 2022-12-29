@@ -32,8 +32,11 @@ class _ChatPageState extends State<ChatPage> {
         id: userData["username"],
         firstName: userData["name"],
       );
+      List<Message> messagesFromSql =
+          await SQL().getMessages(widget.chatAttributes["name"]);
       setState(() {
         user = tempUser;
+        messages = messagesFromSql;
       });
     }();
   }
