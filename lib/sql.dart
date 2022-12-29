@@ -119,7 +119,7 @@ class SQL {
     await connection.close();
   }
 
-  Future<String?> addMessage(Message message, String chat) async {
+  Future<String?> addMessage(Message message, String chatName) async {
     PostgreSQLConnection connection = await connect();
     String? messageID;
 
@@ -139,7 +139,7 @@ class SQL {
         @username:text, 
         @created_at:int4, 
         @content:text)""", substitutionValues: {
-        "chat_name": chat,
+        "chat_name": chatName,
         "username": message.author.id,
         "created_at": message.createdAt,
         "content": message.text
@@ -165,13 +165,38 @@ class SQL {
     return messageID;
   }
 
+  Future<List<Message>> getMessages(String chatName) async {
+    PostgreSQLConnection connection = await connect();
+
+    List result = await connection.query(
+        'SELECT * FROM message WHERE chat_name = @chat_name:text ORDER BY created_at DESC',
+        substitutionValues: {"chat_name": chatName});
+    print(result);
+    List<Message> messages = [];
+    for (final msg in result) {
+      List result = await connection.query(
+          'SELECT username, name FROM member WHERE username = @username:text',
+          substitutionValues: {"username": msg[2]});
+      User tempUser = User(
+        id: result[0][0],
+        firstName: result[0][1],
+      );
+      messages.add(TextMessage(
+          id: msg[0].toString(),
+          author: tempUser,
+          createdAt: msg[3],
+          text: msg[4]));
+    }
+    await connection.close();
+    return messages;
+  }
+
   void query() async {
-    // return;
     PostgreSQLConnection connection = await connect();
 
     List result = await connection.query(
         //"SELECT * FROM pg_catalog.pg_tables WHERE schemaname != 'pg_catalog' AND schemaname != 'information_schema';"
-        "SELECT * FROM message;"
+        "SELECT username, password FROM member;"
         // """CREATE TABLE message(
         //   id SERIAL PRIMARY KEY,
         //   chat_name text NOT NULL,
