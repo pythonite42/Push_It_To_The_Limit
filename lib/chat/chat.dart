@@ -2,8 +2,8 @@ import 'dart:convert';
 import 'dart:math';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
-import 'package:flutter_chat_ui/flutter_chat_ui.dart';
+import 'package:flutter_chat_types/flutter_chat_types.dart';
+import 'package:flutter_chat_ui/flutter_chat_ui.dart' as chat_ui;
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:open_filex/open_filex.dart';
@@ -28,8 +28,8 @@ class ChatPage extends StatefulWidget {
 }
 
 class _ChatPageState extends State<ChatPage> {
-  List<types.Message> messages = [];
-  types.User user = types.User(id: Uuid().v4());
+  List<Message> messages = [];
+  User user = User(id: Uuid().v4());
   Color inputBackgroundColor = Color.fromARGB(255, 62, 62, 62);
 
   @override
@@ -37,12 +37,12 @@ class _ChatPageState extends State<ChatPage> {
     super.initState();
     () async {
       Map userData = await SQL().getLoggedUser();
-      types.User tempUser = types.User(
+      User tempUser = User(
         id: userData["username"],
         firstName: userData["name"],
         //imageUrl: 'https://picsum.photos/250?image=9'
       );
-      final textMessage = types.TextMessage(
+      final textMessage = TextMessage(
         author: tempUser,
         createdAt: DateTime.now().millisecondsSinceEpoch,
         id: randomString(),
@@ -55,8 +55,8 @@ class _ChatPageState extends State<ChatPage> {
       });
     }();
     for (var i = 0; i < 100; i++) {
-      types.Message message = types.TextMessage(
-        author: types.User(
+      Message message = TextMessage(
+        author: User(
           id: (i % 16).toString(),
           firstName: "Tony",
           //imageUrl: 'https://picsum.photos/250?image=9'
@@ -70,8 +70,8 @@ class _ChatPageState extends State<ChatPage> {
       );
       messages.add(message);
     }
-    types.Message message = types.TextMessage(
-        author: types.User(
+    Message message = TextMessage(
+        author: User(
           id: "0",
           firstName: "Tony",
           //imageUrl: 'https://picsum.photos/250?image=9'
@@ -93,7 +93,7 @@ class _ChatPageState extends State<ChatPage> {
       final bytes = await result.readAsBytes();
       final image = await decodeImageFromList(bytes);
 
-      final message = types.ImageMessage(
+      final message = ImageMessage(
         author: user,
         createdAt: DateTime.now().millisecondsSinceEpoch,
         height: image.height.toDouble(),
@@ -114,7 +114,7 @@ class _ChatPageState extends State<ChatPage> {
     );
 
     if (result != null && result.files.single.path != null) {
-      final message = types.FileMessage(
+      final message = FileMessage(
         author: user,
         createdAt: DateTime.now().millisecondsSinceEpoch,
         id: randomString(),
@@ -185,23 +185,57 @@ class _ChatPageState extends State<ChatPage> {
         });
   }
 
-  void _handleMessageTap(BuildContext _, types.Message message) async {
-    if (message is types.FileMessage) {
+  void _handleMessageTap(BuildContext _, Message message) async {
+    if (message is FileMessage) {
       await OpenFilex.open(message.uri);
     }
   }
 
-  void _addMessage(types.Message message) {
+  void _addMessage(Message message) {
     setState(() {
       messages.insert(0, message);
     });
-    var jsonMsg = message.toJson();
-    print(jsonMsg);
-    SQL().addMessage(jsonMsg, "Push It Talk");
+    SQL().addMessage(message, "Push It Talk");
   }
 
-  void _handleSendPressed(types.PartialText message) {
-    final textMessage = types.TextMessage(
+  dynamic getTypedMessage(Map<String, dynamic> json) {
+    final type = MessageType.values.firstWhere(
+      (e) => e.name == json['type'],
+      orElse: () => MessageType.unsupported,
+    );
+
+    // if (type == MessageType.audio) tempMsg = AudioMessage.fromJson(jsonMsg);
+    // if (type == MessageType.custom) tempMsg = CustomMessage.fromJson(jsonMsg);
+    // if (type == MessageType.file) tempMsg = FileMessage.fromJson(jsonMsg);
+    // if (type == MessageType.image) tempMsg = ImageMessage.fromJson(jsonMsg);
+    // if (type == MessageType.system) tempMsg = SystemMessage.fromJson(jsonMsg);
+    // if (type == MessageType.text) tempMsg = TextMessage.fromJson(jsonMsg);
+    // if (type == MessageType.unsupported)
+    //   tempMsg = UnsupportedMessage.fromJson(jsonMsg);
+    // if (type == MessageType.video) tempMsg = VideoMessage.fromJson(jsonMsg);
+
+    switch (type) {
+      case MessageType.audio:
+        return AudioMessage.fromJson(json);
+      case MessageType.custom:
+        return CustomMessage.fromJson(json);
+      case MessageType.file:
+        return FileMessage.fromJson(json);
+      case MessageType.image:
+        return ImageMessage.fromJson(json);
+      case MessageType.system:
+        return SystemMessage.fromJson(json);
+      case MessageType.text:
+        return TextMessage.fromJson(json);
+      case MessageType.unsupported:
+        return UnsupportedMessage.fromJson(json);
+      case MessageType.video:
+        return VideoMessage.fromJson(json);
+    }
+  }
+
+  void _handleSendPressed(PartialText message) {
+    final textMessage = TextMessage(
       author: user,
       createdAt: DateTime.now().millisecondsSinceEpoch,
       id: randomString(),
@@ -218,12 +252,12 @@ class _ChatPageState extends State<ChatPage> {
         showDM: false,
         heading: widget.chatAttributes["name"],
       ),
-      body: Chat(
+      body: chat_ui.Chat(
         messages: messages,
         onSendPressed: _handleSendPressed,
         user: user,
         onMessageTap: _handleMessageTap,
-        onAttachmentPressed: _handleAttachmentPressed,
+        //onAttachmentPressed: _handleAttachmentPressed,  // uncomment to enable image and file
         theme: myChatTheme(context, inputBackgroundColor),
         showUserAvatars: true,
         showUserNames: true,

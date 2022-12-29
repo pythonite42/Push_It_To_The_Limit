@@ -1,5 +1,5 @@
 import 'dart:developer';
-
+import 'package:flutter_chat_types/flutter_chat_types.dart';
 import 'package:postgres/postgres.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -120,16 +120,63 @@ class SQL {
     await connection.close();
   }
 
-  addMessage(Map message, String chat) async {
+  addMessage(Message message, String chat) async {
     PostgreSQLConnection connection = await connect();
     log(message.toString());
-    await connection.query("""INSERT INTO message 
-        (CHAT,MESSAGE) 
+
+    if (message.type == MessageType.text) {
+      // message always was created like this: TextMessage(
+      //   author: user,
+      //   createdAt: DateTime.now().millisecondsSinceEpoch,
+      //   id: randomString(),
+      //   text: message.text,
+      // );
+      message = message as TextMessage;
+
+      await connection.query("""INSERT INTO message 
+        (chat_name,username, created_at, content) 
         VALUES 
-        (@chat:text, 
-        @message:text, 
-        )""",
-        substitutionValues: {"chat": chat, "message": message.toString()});
+        (@chat_name:text,
+        @username:text, 
+        @created_at:int4, 
+        @content:text)""", substitutionValues: {
+        "chat_name": chat,
+        "username": message.author.id,
+        "created_at": message.createdAt,
+        "content": message.text
+      });
+    }
+
+    // if (type == MessageType.audio) { await connection.query(...);}
+    // if (type == MessageType.custom) { await connection.query(...);}
+    // if (type == MessageType.file) { await connection.query(...);}
+    // if (type == MessageType.image) { await connection.query(...);}
+    // if (type == MessageType.system) { await connection.query(...);}
+    // if (type == MessageType.unsupported) { await connection.query(...);}
+    // if (type == MessageType.video) { await connection.query(...);}
+
     await connection.close();
+  }
+
+  void query() async {
+    PostgreSQLConnection connection = await connect();
+
+    List result = await connection.query(
+        //"SELECT * FROM pg_catalog.pg_tables WHERE schemaname != 'pg_catalog' AND schemaname != 'information_schema';"
+        "SELECT * FROM message;"
+        // """CREATE TABLE message(
+        //   id SERIAL PRIMARY KEY,
+        //   chat_name text NOT NULL,
+        //   username text NOT NULL,
+        //   created_at integer NOT NULL,
+        //   content text
+        // );"""
+
+        );
+
+    await connection.close();
+    print("-----------------------------");
+    print("Query result: $result");
+    print("-----------------------------");
   }
 }
