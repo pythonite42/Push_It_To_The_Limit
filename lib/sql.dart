@@ -132,12 +132,14 @@ class SQL {
       // );
       message = message as TextMessage;
 
+      // integer (int4) for created_at is too small. I need bigint (int8) here
+
       await connection.query("""INSERT INTO message 
         (chat_name,username, created_at, content) 
         VALUES 
         (@chat_name:text,
         @username:text, 
-        @created_at:int4, 
+        @created_at:int8, 
         @content:text)""", substitutionValues: {
         "chat_name": chatName,
         "username": message.author.id,
