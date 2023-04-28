@@ -18,6 +18,7 @@ class Treffen extends StatelessWidget {
         "art": "Rideout",
         "ort": "Martfeld",
         "datetime": DateTime(2022, 05, 24, 14, 0, 0),
+        "fahrstil": "Gemütlich",
         "notizen": "Alle willkommen",
         "participants": [
           {
@@ -63,6 +64,8 @@ class Treffen extends StatelessWidget {
         "art": "Grillen",
         "ort": "BWK",
         "datetime": DateTime(2022, 05, 24, 14, 0, 0),
+        "fahrstil": "",
+        "notizen": "Keine fucking 125er",
         "participants": [
           {
             "name": "Sarah",
@@ -89,6 +92,7 @@ class Treffen extends StatelessWidget {
         "art": "Grillen",
         "ort": "BWK",
         "datetime": DateTime(2022, 05, 24, 14, 0, 0),
+        "fahrstil": "",
         "notizen": "Alle willkommen",
         "participants": [
           {
@@ -110,6 +114,8 @@ class Treffen extends StatelessWidget {
         "art": "Grillen",
         "ort": "BWK",
         "datetime": DateTime(2022, 05, 24, 14, 0, 0),
+        "fahrstil": "",
+        "notizen": "Alle willkommen",
         "participants": [
           {
             "name": "Sarah",
@@ -136,6 +142,7 @@ class Treffen extends StatelessWidget {
         "art": "Grillen",
         "ort": "BWK",
         "datetime": DateTime(2022, 05, 24, 14, 0, 0),
+        "fahrstil": "",
         "notizen": "Alle willkommen",
         "participants": [
           {
@@ -231,8 +238,20 @@ class Treffen extends StatelessWidget {
                                             children: [
                                               Icon(Icons.schedule),
                                               SpaceW(),
-                                              Text(DateFormat('kk:mm')
-                                                  .format(data[i]["datetime"]))
+                                                Text(DateFormat('kk:mm').format(
+                                                    data[i]["datetime"]))
+                                              ],
+                                            ),
+                                            if (data[i]["art"] == "Fahren" ||
+                                                data[i]["art"] == "Rideout")
+                                              SpaceH(0.02),
+                                            if (data[i]["art"] == "Fahren" ||
+                                                data[i]["art"] == "Rideout")
+                                              Row(
+                                                children: [
+                                                  Icon(Icons.motorcycle),
+                                                  SpaceW(),
+                                                  Text(data[i]["fahrstil"])
                                             ],
                                           ),
                                           Row(
