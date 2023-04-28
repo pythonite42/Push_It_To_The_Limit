@@ -156,6 +156,26 @@ class Treffen extends StatelessWidget {
                 var data = snapshot.data!;
                 return Column(children: [
                   SpaceH(0.02),
+                  Container(
+                      constraints:
+                          BoxConstraints(maxWidth: MySize(context).w * 0.88),
+                      alignment: Alignment.centerRight,
+                      child: ElevatedButton(
+                        onPressed: () {
+                        },
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Icon(Icons.add, color: beige),
+                              Text("Treffen erstellen")
+                            ]),
+                        style: ElevatedButton.styleFrom(
+                          padding: EdgeInsets.all(10),
+                          backgroundColor: red,
+                        ),
+                      )),
+                  SpaceH(0.02),
                   for (var i = 0; i < data.length; i++)
                     Column(children: [
                       SizedBox(
