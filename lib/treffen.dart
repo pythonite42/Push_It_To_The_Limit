@@ -18,6 +18,7 @@ class Treffen extends StatelessWidget {
         "art": "Rideout",
         "ort": "Martfeld",
         "datetime": DateTime(2022, 05, 24, 14, 0, 0),
+        "notizen": "Alle willkommen",
         "participants": [
           {
             "name": "Sarah",
@@ -88,6 +89,7 @@ class Treffen extends StatelessWidget {
         "art": "Grillen",
         "ort": "BWK",
         "datetime": DateTime(2022, 05, 24, 14, 0, 0),
+        "notizen": "Alle willkommen",
         "participants": [
           {
             "name": "Sarah",
@@ -134,6 +136,7 @@ class Treffen extends StatelessWidget {
         "art": "Grillen",
         "ort": "BWK",
         "datetime": DateTime(2022, 05, 24, 14, 0, 0),
+        "notizen": "Alle willkommen",
         "participants": [
           {
             "name": "Sarah",
@@ -261,7 +264,12 @@ class Treffen extends StatelessWidget {
                                             ],
                                           ),
                                           SpaceH(0.02),
-                                          if (data[i]["admin"])
+                                            Text(
+                                              data[i]["notizen"],
+                                              style: TextStyle(
+                                                  fontStyle: FontStyle.italic),
+                                            ),
+                                            SpaceH(0.03),
                                             Row(
                                               mainAxisAlignment:
                                                   MainAxisAlignment
