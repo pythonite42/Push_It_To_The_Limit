@@ -294,91 +294,34 @@ class Treffen extends StatelessWidget {
                                                   MainAxisAlignment
                                                       .spaceBetween,
                                               children: [
-                                                Expanded(
-                                                  child: ElevatedButton(
-                                                      style: ButtonStyle(
-                                                          padding:
-                                                              MaterialStateProperty
-                                                                  .all(EdgeInsets
-                                                                      .zero),
-                                                          foregroundColor:
-                                                              MaterialStateProperty
-                                                                  .all(black),
-                                                          backgroundColor:
-                                                              MaterialStateProperty
-                                                                  .all(
-                                                                      brightRed)),
-                                                      onPressed: () {},
-                                                      child: AutoSizeText(
-                                                        "Absagen",
-                                                        maxLines: 1,
-                                                      )),
-                                                ),
+                                                TreffenButton(
+                                                    text: "Absagen",
+                                                    color: brightRed,
+                                                    selectedText: "Abgesagt",
+                                                    onPressed: (!data[i]
+                                                            ["admin"])
+                                                        ? null
+                                                        : () {
+                                                            print("Absagen");
+                                                          }),
                                                 SpaceW(0.03),
-                                                Expanded(
-                                                    child: ElevatedButton(
-                                                        style: ButtonStyle(
-                                                            padding:
-                                                                MaterialStateProperty.all(
-                                                                    EdgeInsets
-                                                                        .zero),
-                                                            foregroundColor:
-                                                                MaterialStateProperty
-                                                                    .all(black),
-                                                            backgroundColor:
-                                                                MaterialStateProperty
-                                                                    .all(Colors
-                                                                        .yellow)),
-                                                        onPressed: () {},
-                                                        child: AutoSizeText(
-                                                          "Vielleicht",
-                                                          maxLines: 1,
-                                                        ))),
+                                                TreffenButton(
+                                                    text: "Vielleicht",
+                                                    color: Colors.yellow,
+                                                    onPressed: () {
+                                                      print("Vielleicht");
+                                                    }),
                                                 SpaceW(0.03),
-                                                Expanded(
-                                                    child: ElevatedButton(
-                                                        style: ButtonStyle(
-                                                            padding:
-                                                                MaterialStateProperty.all(
-                                                                    EdgeInsets
-                                                                        .zero),
-                                                            foregroundColor:
-                                                                MaterialStateProperty
-                                                                    .all(black),
-                                                            backgroundColor:
-                                                                MaterialStateProperty
-                                                                    .all(Colors
-                                                                        .green)),
-                                                        onPressed: () {},
-                                                        child: AutoSizeText(
-                                                          "Zusagen",
-                                                          maxLines: 1,
-                                                        )))
-                                              ],
-                                            ),
-                                          if (!data[i]["admin"])
-                                            Row(
-                                                mainAxisSize: MainAxisSize.max,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.end,
-                                                children: [
-                                                  ElevatedButton(
-                                                      style: ButtonStyle(
-                                                          foregroundColor:
-                                                              MaterialStateProperty
-                                                                  .all(black),
-                                                          backgroundColor:
-                                                              MaterialStateProperty
-                                                                  .all(Colors
-                                                                      .green)),
-                                                      onPressed: () {},
-                                                      child: AutoSizeText(
-                                                        "Zusagen",
-                                                        maxLines: 1,
-                                                      ))
-                                                ])
+                                                TreffenButton(
+                                                    text: "Zusagen",
+                                                    color: Colors.green,
+                                                    selectedText: "Zugesagt",
+                                                    onPressed: () {
+                                                      print("Zusagen");
+                                                    }),
                                         ],
-                                      ))))),
+                                            )
+                                          ]))))),
                       SpaceH(0.02),
                       if (i < data.length - 1)
                         if (data[i]["admin"] == true &&
@@ -475,6 +418,44 @@ class Treffen extends StatelessWidget {
       },
       barrierDismissible: true,
     );
+  }
+}
+
+class TreffenButton extends StatelessWidget {
+  const TreffenButton(
+      {Key? key,
+      required this.text,
+      required this.color,
+      required this.onPressed,
+      this.selected = false,
+      this.selectedText})
+      : super(key: key);
+  final String text;
+  final Color color;
+  final Function()? onPressed;
+  final bool selected;
+  final String? selectedText;
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+        child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              padding: EdgeInsets.zero,
+              foregroundColor: black,
+              backgroundColor: color,
+            ),
+            onPressed: onPressed,
+            child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+              if (selected)
+                Padding(
+                    padding: EdgeInsets.only(right: MySize(context).w * 0.01),
+                    child: Icon(Icons.check)),
+              AutoSizeText(
+                (selected && selectedText != null) ? selectedText! : text,
+                maxLines: 1,
+              )
+            ])));
   }
 }
 
