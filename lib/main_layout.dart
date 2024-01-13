@@ -18,7 +18,7 @@ class HomePageState extends State<HomePage> {
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static const List<Widget> _widgetOptions = <Widget>[
     ChatOverview(),
-    Treffen(),
+    TreffenScreen(),
     Mitglieder()
   ];
 

@@ -271,7 +271,7 @@ class _RegisterState extends State<Register> {
                                       "Keine Angabe",
                                       "Rasant",
                                       "Gemütlich",
-                                      "Anpassungsfähig"
+                                      "Flexibel"
                                     ].map<DropdownMenuItem<String>>(
                                         (String value) {
                                       return DropdownMenuItem<String>(

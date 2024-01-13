@@ -5,9 +5,14 @@ import 'package:pushit/colors.dart';
 import 'package:pushit/global/global_widgets.dart';
 import 'package:intl/intl.dart';
 
-class Treffen extends StatelessWidget {
-  const Treffen({Key? key}) : super(key: key);
+class TreffenScreen extends StatefulWidget {
+  const TreffenScreen({Key? key}) : super(key: key);
 
+  @override
+  State<TreffenScreen> createState() => _TreffenScreenState();
+}
+
+class _TreffenScreenState extends State<TreffenScreen> {
   Future<List> getData() async {
     await Future.delayed(Duration(seconds: 1));
     ByteData bytes = await rootBundle.load('assets/pushit_logo.png');
@@ -16,7 +21,8 @@ class Treffen extends StatelessWidget {
       {
         "admin": true,
         "art": "Rideout",
-        "ort": "Martfeld",
+        "start": "Bremen",
+        "ziel": "Martfeld",
         "datetime": DateTime(2022, 05, 24, 14, 0, 0),
         "fahrstil": "Gemütlich",
         "notizen": "Alle willkommen",
@@ -62,7 +68,7 @@ class Treffen extends StatelessWidget {
       {
         "admin": true,
         "art": "Grillen",
-        "ort": "BWK",
+        "ziel": "BWK",
         "datetime": DateTime(2022, 05, 24, 14, 0, 0),
         "fahrstil": "",
         "notizen": "Keine fucking 125er",
@@ -90,7 +96,7 @@ class Treffen extends StatelessWidget {
       {
         "admin": false,
         "art": "Grillen",
-        "ort": "BWK",
+        "ziel": "BWK",
         "datetime": DateTime(2022, 05, 24, 14, 0, 0),
         "fahrstil": "",
         "notizen": "Alle willkommen",
@@ -112,7 +118,7 @@ class Treffen extends StatelessWidget {
       {
         "admin": false,
         "art": "Grillen",
-        "ort": "BWK",
+        "ziel": "BWK",
         "datetime": DateTime(2022, 05, 24, 14, 0, 0),
         "fahrstil": "",
         "notizen": "Alle willkommen",
@@ -140,7 +146,7 @@ class Treffen extends StatelessWidget {
       {
         "admin": false,
         "art": "Grillen",
-        "ort": "BWK",
+        "ziel": "BWK",
         "datetime": DateTime(2022, 05, 24, 14, 0, 0),
         "fahrstil": "",
         "notizen": "Alle willkommen",
@@ -155,6 +161,8 @@ class Treffen extends StatelessWidget {
       },
     ];
   }
+
+  // Treffen neuesTreffen=Treffen(admin, art, start, ziel, datum, fahrstil, notizen, teilnehmer);
 
   @override
   Widget build(BuildContext context) {
@@ -172,6 +180,169 @@ class Treffen extends StatelessWidget {
                       alignment: Alignment.centerRight,
                       child: ElevatedButton(
                         onPressed: () {
+                          String art = "Fahren";
+                          String fahrstil = "Flexibel";
+                          showDialog(
+                            useRootNavigator: false,
+                            context: context,
+                            builder: (_) {
+                              return AlertDialog(
+                                title: Text("Treffen erstellen"),
+                                content: SizedBox(
+                                    width: MySize(context).w * 0.8,
+                                    child: SingleChildScrollView(
+                                        child: Column(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                          Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Text("Art des Treffens"),
+                                                DropdownButton(
+                                                  value: art,
+                                                  icon: const Icon(
+                                                      Icons.expand_more),
+                                                  onChanged:
+                                                      (String? newValue) {
+                                                    art = newValue ?? "Fahren";
+                                                  },
+                                                  items: <String>[
+                                                    "Fahren",
+                                                    "Grillen",
+                                                    "Rideout",
+                                                    "Sonstiges"
+                                                  ].map<
+                                                          DropdownMenuItem<
+                                                              String>>(
+                                                      (String value) {
+                                                    return DropdownMenuItem<
+                                                        String>(
+                                                      value: value,
+                                                      child: Text(value),
+                                                    );
+                                                  }).toList(),
+                                                )
+                                              ]),
+                                          Row(children: const [
+                                            Icon(Icons.pin_drop),
+                                            SpaceW(),
+                                            Expanded(
+                                                child: TextField(
+                                              decoration: InputDecoration(
+                                                labelText: 'Start*',
+                                              ),
+                                            ))
+                                          ]),
+                                          Row(children: const [
+                                            Icon(Icons.pin_drop),
+                                            SpaceW(),
+                                            Expanded(
+                                                child: TextField(
+                                              decoration: InputDecoration(
+                                                labelText: 'Ziel*',
+                                              ),
+                                            ))
+                                          ]),
+                                          Row(children: const [
+                                            Icon(Icons.date_range),
+                                            SpaceW(),
+                                            Expanded(
+                                                child: TextField(
+                                              decoration: InputDecoration(
+                                                labelText: 'Datum',
+                                              ),
+                                            ))
+                                          ]),
+                                          Row(children: const [
+                                            Icon(Icons.schedule),
+                                            SpaceW(),
+                                            Expanded(
+                                                child: TextField(
+                                              decoration: InputDecoration(
+                                                labelText: 'Uhrzeit',
+                                              ),
+                                            ))
+                                          ]),
+                                          SpaceH(0.01),
+                                          Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Row(
+                                                  children: const [
+                                                    Icon(Icons.motorcycle),
+                                                    SpaceW(),
+                                                    Text("Fahrstil"),
+                                                    SpaceW()
+                                                  ],
+                                                ),
+                                                DropdownButton(
+                                                  value: fahrstil,
+                                                  icon: const Icon(
+                                                      Icons.expand_more),
+                                                  onChanged:
+                                                      (String? newValue) {
+                                                    fahrstil =
+                                                        newValue ?? "Flexibel";
+                                                  },
+                                                  items: <String>[
+                                                    "Keine Angabe",
+                                                    "Rasant",
+                                                    "Gemütlich",
+                                                    "Flexibel"
+                                                  ].map<
+                                                          DropdownMenuItem<
+                                                              String>>(
+                                                      (String value) {
+                                                    return DropdownMenuItem<
+                                                        String>(
+                                                      value: value,
+                                                      child: (value ==
+                                                              "Keine Angabe")
+                                                          ? Text(value,
+                                                              style: TextStyle(
+                                                                  fontStyle:
+                                                                      FontStyle
+                                                                          .italic,
+                                                                  color: grey))
+                                                          : Text(value),
+                                                    );
+                                                  }).toList(),
+                                                )
+                                              ]),
+                                          Row(children: const [
+                                            Icon(Icons.notes),
+                                            SpaceW(),
+                                            Expanded(
+                                                child: TextField(
+                                              maxLines: 3,
+                                              decoration: InputDecoration(
+                                                labelText: 'Notizen',
+                                              ),
+                                            ))
+                                          ])
+                                        ]))),
+                                actions: [
+                                  TextButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: Text("Abbrechen",
+                                          style: TextStyle(fontSize: 16))),
+                                  TextButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: Text("Speichern",
+                                          style: TextStyle(fontSize: 16)))
+                                ],
+                              );
+                            },
+                            barrierDismissible: true,
+                          );
                         },
                         child: Row(
                             mainAxisAlignment: MainAxisAlignment.end,
@@ -198,46 +369,48 @@ class Treffen extends StatelessWidget {
                                           vertical: MySize(context).w * 0.05,
                                           horizontal: MySize(context).w * 0.05),
                                       child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(data[i]["art"],
-                                              style: (data[i]["admin"] == true)
-                                                  ? TextStyle(
-                                                      color: red,
-                                                      fontSize:
-                                                          MySize(context).h *
-                                                              0.04,
-                                                      fontWeight:
-                                                          FontWeight.bold)
-                                                  : TextStyle(
-                                                      fontSize:
-                                                          MySize(context).h *
-                                                              0.025,
-                                                      fontWeight:
-                                                          FontWeight.bold)),
-                                          SpaceH(0.025),
-                                          Row(
-                                            children: [
-                                              Icon(Icons.pin_drop),
-                                              SpaceW(),
-                                              Text(data[i]["ort"])
-                                            ],
-                                          ),
-                                          SpaceH(0.02),
-                                          Row(
-                                            children: [
-                                              Icon(Icons.date_range),
-                                              SpaceW(),
-                                              Text(DateFormat('dd.MM.yyyy')
-                                                  .format(data[i]["datetime"]))
-                                            ],
-                                          ),
-                                          SpaceH(0.02),
-                                          Row(
-                                            children: [
-                                              Icon(Icons.schedule),
-                                              SpaceW(),
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(data[i]["art"],
+                                                style: (data[i]["admin"] ==
+                                                        true)
+                                                    ? TextStyle(
+                                                        color: red,
+                                                        fontSize:
+                                                            MySize(context).h *
+                                                                0.04,
+                                                        fontWeight:
+                                                            FontWeight.bold)
+                                                    : TextStyle(
+                                                        fontSize:
+                                                            MySize(context).h *
+                                                                0.025,
+                                                        fontWeight:
+                                                            FontWeight.bold)),
+                                            SpaceH(0.025),
+                                            Row(
+                                              children: [
+                                                Icon(Icons.pin_drop),
+                                                SpaceW(),
+                                                Text(data[i]["ziel"])
+                                              ],
+                                            ),
+                                            SpaceH(0.02),
+                                            Row(
+                                              children: [
+                                                Icon(Icons.date_range),
+                                                SpaceW(),
+                                                Text(DateFormat('dd.MM.yyyy')
+                                                    .format(
+                                                        data[i]["datetime"]))
+                                              ],
+                                            ),
+                                            SpaceH(0.02),
+                                            Row(
+                                              children: [
+                                                Icon(Icons.schedule),
+                                                SpaceW(),
                                                 Text(DateFormat('kk:mm').format(
                                                     data[i]["datetime"]))
                                               ],
@@ -252,37 +425,38 @@ class Treffen extends StatelessWidget {
                                                   Icon(Icons.motorcycle),
                                                   SpaceW(),
                                                   Text(data[i]["fahrstil"])
-                                            ],
-                                          ),
-                                          Row(
-                                            children: [
-                                              Icon(Icons.people),
-                                              SpaceW(),
-                                              TextButton(
-                                                  style: ButtonStyle(
-                                                    textStyle:
-                                                        MaterialStateProperty
-                                                            .all(TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.normal,
-                                                      decoration: TextDecoration
-                                                          .underline,
-                                                    )),
-                                                    padding:
-                                                        MaterialStateProperty
-                                                            .all(EdgeInsets.all(
-                                                                0)),
-                                                  ),
-                                                  onPressed: () {
-                                                    participantsDialog(
-                                                        context,
-                                                        data[i]
-                                                            ["participants"]);
-                                                  },
-                                                  child: Text("Teilnehmer"))
-                                            ],
-                                          ),
-                                          SpaceH(0.02),
+                                                ],
+                                              ),
+                                            Row(
+                                              children: [
+                                                Icon(Icons.people),
+                                                SpaceW(),
+                                                TextButton(
+                                                    style: ButtonStyle(
+                                                      textStyle:
+                                                          MaterialStateProperty
+                                                              .all(TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.normal,
+                                                        decoration:
+                                                            TextDecoration
+                                                                .underline,
+                                                      )),
+                                                      padding:
+                                                          MaterialStateProperty
+                                                              .all(EdgeInsets
+                                                                  .all(0)),
+                                                    ),
+                                                    onPressed: () {
+                                                      participantsDialog(
+                                                          context,
+                                                          data[i]
+                                                              ["participants"]);
+                                                    },
+                                                    child: Text("Teilnehmer"))
+                                              ],
+                                            ),
+                                            SpaceH(0.02),
                                             Text(
                                               data[i]["notizen"],
                                               style: TextStyle(
@@ -319,7 +493,7 @@ class Treffen extends StatelessWidget {
                                                     onPressed: () {
                                                       print("Zusagen");
                                                     }),
-                                        ],
+                                              ],
                                             )
                                           ]))))),
                       SpaceH(0.02),
@@ -356,6 +530,7 @@ class Treffen extends StatelessWidget {
               height: MySize(context).h * 0.6,
               child: SingleChildScrollView(
                   child: Column(
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   for (var i = 0; i < participants.length; i++)
                     Column(children: [
@@ -473,4 +648,19 @@ Future<Map> getProfileData(username, name, bike, image) async {
     "geschlecht": "Keine Angabe",
     "insta": ""
   };
+}
+
+class Treffen {
+  bool admin;
+  String art; //Rideout, Grillen, Fahren, Sonstiges
+  String start;
+  String ziel;
+  String datum;
+  String uhrzeit;
+  String? fahrstil;
+  String? notizen;
+  List<Map> teilnehmer;
+
+  Treffen(this.admin, this.art, this.start, this.ziel, this.datum, this.uhrzeit,
+      this.fahrstil, this.notizen, this.teilnehmer);
 }

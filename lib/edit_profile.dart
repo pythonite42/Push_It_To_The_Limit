@@ -278,7 +278,7 @@ class _EditProfileFormState extends State<EditProfileForm> {
                                     "Keine Angabe",
                                     "Rasant",
                                     "Gemütlich",
-                                    "Anpassungsfähig"
+                                    "Flexibel"
                                   ].map<DropdownMenuItem<String>>(
                                       (String value) {
                                     return DropdownMenuItem<String>(
