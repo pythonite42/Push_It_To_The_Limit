@@ -14,13 +14,8 @@ class HomePage extends StatefulWidget {
 
 class HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-  static const List<Widget> _widgetOptions = <Widget>[
-    ChatOverview(),
-    Treffen(),
-    Mitglieder()
-  ];
+  static const TextStyle optionStyle = TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+  static const List<Widget> _widgetOptions = <Widget>[ChatOverview(), Treffen(), Mitglieder()];
 
   void _onItemTapped(int index) {
     setState(() {
@@ -42,15 +37,13 @@ class HomePageState extends State<HomePage> {
           body: Center(
             child: _widgetOptions.elementAt(_selectedIndex),
           ),
-          bottomNavigationBar:
-              BottomNavBar(currentIndex: _selectedIndex, onTap: _onItemTapped))
+          bottomNavigationBar: BottomNavBar(currentIndex: _selectedIndex, onTap: _onItemTapped))
     ]);
   }
 }
 
 class BottomNavBar extends StatelessWidget implements PreferredSizeWidget {
-  const BottomNavBar({Key? key, this.currentIndex = 0, this.onTap})
-      : super(key: key);
+  const BottomNavBar({Key? key, this.currentIndex = 0, this.onTap}) : super(key: key);
   final int currentIndex;
   final void Function(int)? onTap;
   @override
@@ -74,7 +67,7 @@ class BottomNavBar extends StatelessWidget implements PreferredSizeWidget {
       ],
       currentIndex: currentIndex,
       selectedItemColor: Theme.of(context).colorScheme.secondary,
-      unselectedItemColor: Theme.of(context).colorScheme.onBackground,
+      unselectedItemColor: Theme.of(context).colorScheme.onSecondary,
       onTap: onTap,
       backgroundColor: Theme.of(context).colorScheme.primary,
       showUnselectedLabels: false,
