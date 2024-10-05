@@ -19,42 +19,12 @@ class Treffen extends StatelessWidget {
         "ort": "Martfeld",
         "datetime": DateTime(2022, 05, 24, 14, 0, 0),
         "participants": [
-          {
-            "name": "Sarah",
-            "bike": "Kawasaki Z400",
-            "image": list,
-            "username": "sarah.flutter"
-          },
-          {
-            "name": "Sarah",
-            "bike": "Kawasaki Z400",
-            "image": list,
-            "username": "sarah.flutter"
-          },
-          {
-            "name": "Sarah",
-            "bike": "Kawasaki Z400",
-            "image": list,
-            "username": "sarah.flutter"
-          },
-          {
-            "name": "Sarah",
-            "bike": "Kawasaki Z400",
-            "image": list,
-            "username": "sarah.flutter"
-          },
-          {
-            "name": "Sarah",
-            "bike": "Kawasaki Z400",
-            "image": list,
-            "username": "sarah.flutter"
-          },
-          {
-            "name": "Sarah",
-            "bike": "Kawasaki Z400",
-            "image": list,
-            "username": "sarah.flutter"
-          },
+          {"name": "Sarah", "bike": "Kawasaki Z400", "image": list, "username": "sarah.flutter"},
+          {"name": "Sarah", "bike": "Kawasaki Z400", "image": list, "username": "sarah.flutter"},
+          {"name": "Sarah", "bike": "Kawasaki Z400", "image": list, "username": "sarah.flutter"},
+          {"name": "Sarah", "bike": "Kawasaki Z400", "image": list, "username": "sarah.flutter"},
+          {"name": "Sarah", "bike": "Kawasaki Z400", "image": list, "username": "sarah.flutter"},
+          {"name": "Sarah", "bike": "Kawasaki Z400", "image": list, "username": "sarah.flutter"},
         ]
       },
       {
@@ -63,24 +33,9 @@ class Treffen extends StatelessWidget {
         "ort": "BWK",
         "datetime": DateTime(2022, 05, 24, 14, 0, 0),
         "participants": [
-          {
-            "name": "Sarah",
-            "bike": "Kawasaki Z400",
-            "image": list,
-            "username": "sarah.flutter"
-          },
-          {
-            "name": "Sarah",
-            "bike": "Kawasaki Z400",
-            "image": list,
-            "username": "sarah.flutter"
-          },
-          {
-            "name": "Sarah",
-            "bike": "Kawasaki Z400",
-            "image": list,
-            "username": "sarah.flutter"
-          },
+          {"name": "Sarah", "bike": "Kawasaki Z400", "image": list, "username": "sarah.flutter"},
+          {"name": "Sarah", "bike": "Kawasaki Z400", "image": list, "username": "sarah.flutter"},
+          {"name": "Sarah", "bike": "Kawasaki Z400", "image": list, "username": "sarah.flutter"},
         ]
       },
       {
@@ -89,18 +44,8 @@ class Treffen extends StatelessWidget {
         "ort": "BWK",
         "datetime": DateTime(2022, 05, 24, 14, 0, 0),
         "participants": [
-          {
-            "name": "Sarah",
-            "bike": "Kawasaki Z400",
-            "image": list,
-            "username": "sarah.flutter"
-          },
-          {
-            "name": "Sarah",
-            "bike": "Kawasaki Z400",
-            "image": list,
-            "username": "sarah.flutter"
-          },
+          {"name": "Sarah", "bike": "Kawasaki Z400", "image": list, "username": "sarah.flutter"},
+          {"name": "Sarah", "bike": "Kawasaki Z400", "image": list, "username": "sarah.flutter"},
         ]
       },
       {
@@ -109,24 +54,9 @@ class Treffen extends StatelessWidget {
         "ort": "BWK",
         "datetime": DateTime(2022, 05, 24, 14, 0, 0),
         "participants": [
-          {
-            "name": "Sarah",
-            "bike": "Kawasaki Z400",
-            "image": list,
-            "username": "sarah.flutter"
-          },
-          {
-            "name": "Sarah",
-            "bike": "Kawasaki Z400",
-            "image": list,
-            "username": "sarah.flutter"
-          },
-          {
-            "name": "Sarah",
-            "bike": "Kawasaki Z400",
-            "image": list,
-            "username": "sarah.flutter"
-          },
+          {"name": "Sarah", "bike": "Kawasaki Z400", "image": list, "username": "sarah.flutter"},
+          {"name": "Sarah", "bike": "Kawasaki Z400", "image": list, "username": "sarah.flutter"},
+          {"name": "Sarah", "bike": "Kawasaki Z400", "image": list, "username": "sarah.flutter"},
         ]
       },
       {
@@ -135,12 +65,7 @@ class Treffen extends StatelessWidget {
         "ort": "BWK",
         "datetime": DateTime(2022, 05, 24, 14, 0, 0),
         "participants": [
-          {
-            "name": "Sarah",
-            "bike": "Kawasaki Z400",
-            "image": list,
-            "username": "sarah.flutter"
-          },
+          {"name": "Sarah", "bike": "Kawasaki Z400", "image": list, "username": "sarah.flutter"},
         ]
       },
     ];
@@ -165,42 +90,29 @@ class Treffen extends StatelessWidget {
                               child: Card(
                                   child: Padding(
                                       padding: EdgeInsets.symmetric(
-                                          vertical: MySize(context).w * 0.05,
-                                          horizontal: MySize(context).w * 0.05),
+                                          vertical: MySize(context).w * 0.05, horizontal: MySize(context).w * 0.05),
                                       child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
                                           Text(data[i]["art"],
                                               style: (data[i]["admin"] == true)
                                                   ? TextStyle(
                                                       color: red,
-                                                      fontSize:
-                                                          MySize(context).h *
-                                                              0.04,
-                                                      fontWeight:
-                                                          FontWeight.bold)
+                                                      fontSize: MySize(context).h * 0.04,
+                                                      fontWeight: FontWeight.bold)
                                                   : TextStyle(
-                                                      fontSize:
-                                                          MySize(context).h *
-                                                              0.025,
-                                                      fontWeight:
-                                                          FontWeight.bold)),
+                                                      fontSize: MySize(context).h * 0.025,
+                                                      fontWeight: FontWeight.bold)),
                                           SpaceH(0.025),
                                           Row(
-                                            children: [
-                                              Icon(Icons.pin_drop),
-                                              SpaceW(),
-                                              Text(data[i]["ort"])
-                                            ],
+                                            children: [Icon(Icons.pin_drop), SpaceW(), Text(data[i]["ort"])],
                                           ),
                                           SpaceH(0.02),
                                           Row(
                                             children: [
                                               Icon(Icons.date_range),
                                               SpaceW(),
-                                              Text(DateFormat('dd.MM.yyyy')
-                                                  .format(data[i]["datetime"]))
+                                              Text(DateFormat('dd.MM.yyyy').format(data[i]["datetime"]))
                                             ],
                                           ),
                                           SpaceH(0.02),
@@ -208,8 +120,7 @@ class Treffen extends StatelessWidget {
                                             children: [
                                               Icon(Icons.schedule),
                                               SpaceW(),
-                                              Text(DateFormat('kk:mm')
-                                                  .format(data[i]["datetime"]))
+                                              Text(DateFormat('kk:mm').format(data[i]["datetime"]))
                                             ],
                                           ),
                                           Row(
@@ -218,24 +129,14 @@ class Treffen extends StatelessWidget {
                                               SpaceW(),
                                               TextButton(
                                                   style: ButtonStyle(
-                                                    textStyle:
-                                                        MaterialStateProperty
-                                                            .all(TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.normal,
-                                                      decoration: TextDecoration
-                                                          .underline,
+                                                    textStyle: WidgetStateProperty.all(TextStyle(
+                                                      fontWeight: FontWeight.normal,
+                                                      decoration: TextDecoration.underline,
                                                     )),
-                                                    padding:
-                                                        MaterialStateProperty
-                                                            .all(EdgeInsets.all(
-                                                                0)),
+                                                    padding: WidgetStateProperty.all(EdgeInsets.all(0)),
                                                   ),
                                                   onPressed: () {
-                                                    participantsDialog(
-                                                        context,
-                                                        data[i]
-                                                            ["participants"]);
+                                                    participantsDialog(context, data[i]["participants"]);
                                                   },
                                                   child: Text("Teilnehmer"))
                                             ],
@@ -243,24 +144,14 @@ class Treffen extends StatelessWidget {
                                           SpaceH(0.02),
                                           if (data[i]["admin"])
                                             Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
+                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                               children: [
                                                 Expanded(
                                                   child: ElevatedButton(
                                                       style: ButtonStyle(
-                                                          padding:
-                                                              MaterialStateProperty
-                                                                  .all(EdgeInsets
-                                                                      .zero),
-                                                          foregroundColor:
-                                                              MaterialStateProperty
-                                                                  .all(black),
-                                                          backgroundColor:
-                                                              MaterialStateProperty
-                                                                  .all(
-                                                                      brightRed)),
+                                                          padding: WidgetStateProperty.all(EdgeInsets.zero),
+                                                          foregroundColor: WidgetStateProperty.all(black),
+                                                          backgroundColor: WidgetStateProperty.all(brightRed)),
                                                       onPressed: () {},
                                                       child: AutoSizeText(
                                                         "Absagen",
@@ -271,17 +162,9 @@ class Treffen extends StatelessWidget {
                                                 Expanded(
                                                     child: ElevatedButton(
                                                         style: ButtonStyle(
-                                                            padding:
-                                                                MaterialStateProperty.all(
-                                                                    EdgeInsets
-                                                                        .zero),
-                                                            foregroundColor:
-                                                                MaterialStateProperty
-                                                                    .all(black),
-                                                            backgroundColor:
-                                                                MaterialStateProperty
-                                                                    .all(Colors
-                                                                        .yellow)),
+                                                            padding: WidgetStateProperty.all(EdgeInsets.zero),
+                                                            foregroundColor: WidgetStateProperty.all(black),
+                                                            backgroundColor: WidgetStateProperty.all(Colors.yellow)),
                                                         onPressed: () {},
                                                         child: AutoSizeText(
                                                           "Vielleicht",
@@ -291,17 +174,9 @@ class Treffen extends StatelessWidget {
                                                 Expanded(
                                                     child: ElevatedButton(
                                                         style: ButtonStyle(
-                                                            padding:
-                                                                MaterialStateProperty.all(
-                                                                    EdgeInsets
-                                                                        .zero),
-                                                            foregroundColor:
-                                                                MaterialStateProperty
-                                                                    .all(black),
-                                                            backgroundColor:
-                                                                MaterialStateProperty
-                                                                    .all(Colors
-                                                                        .green)),
+                                                            padding: WidgetStateProperty.all(EdgeInsets.zero),
+                                                            foregroundColor: WidgetStateProperty.all(black),
+                                                            backgroundColor: WidgetStateProperty.all(Colors.green)),
                                                         onPressed: () {},
                                                         child: AutoSizeText(
                                                           "Zusagen",
@@ -312,18 +187,12 @@ class Treffen extends StatelessWidget {
                                           if (!data[i]["admin"])
                                             Row(
                                                 mainAxisSize: MainAxisSize.max,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.end,
+                                                mainAxisAlignment: MainAxisAlignment.end,
                                                 children: [
                                                   ElevatedButton(
                                                       style: ButtonStyle(
-                                                          foregroundColor:
-                                                              MaterialStateProperty
-                                                                  .all(black),
-                                                          backgroundColor:
-                                                              MaterialStateProperty
-                                                                  .all(Colors
-                                                                      .green)),
+                                                          foregroundColor: WidgetStateProperty.all(black),
+                                                          backgroundColor: WidgetStateProperty.all(Colors.green)),
                                                       onPressed: () {},
                                                       child: AutoSizeText(
                                                         "Zusagen",
@@ -334,8 +203,7 @@ class Treffen extends StatelessWidget {
                                       ))))),
                       SpaceH(0.02),
                       if (i < data.length - 1)
-                        if (data[i]["admin"] == true &&
-                            data[i + 1]["admin"] == false)
+                        if (data[i]["admin"] == true && data[i + 1]["admin"] == false)
                           Divider(
                             indent: MySize(context).w * 0.05,
                             endIndent: MySize(context).w * 0.05,
@@ -353,8 +221,7 @@ class Treffen extends StatelessWidget {
             }));
   }
 
-  Future<dynamic> participantsDialog(
-      BuildContext context, List<dynamic> participants) {
+  Future<dynamic> participantsDialog(BuildContext context, List<dynamic> participants) {
     return showDialog(
       useRootNavigator: false,
       context: context,
@@ -374,34 +241,26 @@ class Treffen extends StatelessWidget {
                           children: [
                             CircleAvatar(
                               radius: MySize(context).w * 0.07,
-                              backgroundImage:
-                                  MemoryImage(participants[i]["image"]), //here
+                              backgroundImage: MemoryImage(participants[i]["image"]), //here
                             ),
                             SpaceW(),
                             Expanded(
                                 child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                   Text(
                                     participants[i]["name"],
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.bold),
+                                    style: TextStyle(fontWeight: FontWeight.bold),
                                   ),
-                                  Text(participants[i]["bike"],
-                                      style: TextStyle())
+                                  Text(participants[i]["bike"], style: TextStyle())
                                 ])),
                           ],
                         ),
                         onTap: () async {
-                          var profileData = await getProfileData(
-                              participants[i]["username"],
-                              participants[i]["name"],
-                              participants[i]["bike"],
-                              participants[i]["image"]);
-                          Navigator.pushNamed(context, "/profile",
-                              arguments: profileData);
+                          var profileData = await getProfileData(participants[i]["username"], participants[i]["name"],
+                              participants[i]["bike"], participants[i]["image"]);
+                          Navigator.pushNamed(context, "/profile", arguments: profileData);
                         },
                       ),
                       if (i != participants.length - 1)

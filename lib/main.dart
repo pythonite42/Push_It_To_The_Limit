@@ -15,8 +15,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SharedPreferences prefs = await SharedPreferences.getInstance();
   var status = prefs.getBool('isLoggedIn') ?? false;
-  SystemChrome.setPreferredOrientations(
-      [DeviceOrientation.portraitDown, DeviceOrientation.portraitUp]);
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitDown, DeviceOrientation.portraitUp]);
   await initializeDateFormatting();
   runApp(MyApp(home: status == true ? HomePage() : Login()));
 }
@@ -37,9 +36,9 @@ class MyApp extends StatelessWidget {
             secondary: brightRed,
             onSecondary: beige,
             surface: lightGrey,
-            background: black,
+            //surface: black,
             onSurface: black,
-            onBackground: beige,
+            //onSurface: beige,
           )),
       home: home,
       onGenerateRoute: (settings) {
