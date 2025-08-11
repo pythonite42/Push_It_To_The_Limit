@@ -1,11 +1,22 @@
 import 'package:flutter_chat_types/flutter_chat_types.dart';
 import 'package:postgres/postgres.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class SQL {
   connect() async {
-    var connection = PostgreSQLConnection("REMOVED", 2345, "pushit",
-        username: "pushit", password: 'REMOVED');
+    String ipAddress = dotenv.env['SERVER_IP_ADDRESS'] ?? "";
+    int port = int.parse(dotenv.env['SERVER_PORT'] ?? "0");
+    String databaseName = dotenv.env['SEVRER_DATABASE_NAME'] ?? "";
+    String username = dotenv.env['SEVRER_USERNAME'] ?? "";
+    String password = dotenv.env['SEVRER_PASSWORD'] ?? "";
+    var connection = PostgreSQLConnection(
+      ipAddress,
+      port,
+      databaseName,
+      username: username,
+      password: password,
+    );
     await connection.open();
 
     return connection;
@@ -35,8 +46,7 @@ class SQL {
   Future<List> getMembers() async {
     PostgreSQLConnection connection = await connect();
 
-    List result =
-        await connection.query('SELECT * FROM member ORDER BY name ASC');
+    List result = await connection.query('SELECT * FROM member ORDER BY name ASC');
 
     await connection.close();
     return result;
@@ -46,9 +56,8 @@ class SQL {
     PostgreSQLConnection connection = await connect();
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String username = prefs.getString('username') ?? "";
-    List member = await connection.query(
-        'SELECT * FROM member WHERE username = @username:text',
-        substitutionValues: {"username": username});
+    List member = await connection
+        .query('SELECT * FROM member WHERE username = @username:text', substitutionValues: {"username": username});
     member = member[0];
     await connection.close();
     Map result = {};
@@ -71,9 +80,8 @@ class SQL {
   Future<bool> isUsernameFree(String username) async {
     PostgreSQLConnection connection = await connect();
 
-    List result = await connection.query(
-        'SELECT bike FROM member WHERE username = @username:text',
-        substitutionValues: {"username": username});
+    List result = await connection
+        .query('SELECT bike FROM member WHERE username = @username:text', substitutionValues: {"username": username});
 
     await connection.close();
     return (result.isEmpty) ? true : false;
@@ -94,12 +102,11 @@ class SQL {
     PostgreSQLConnection connection = await connect();
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String oldusername = prefs.getString('username') ?? "";
-    var password = await connection.query(
-        'SELECT password FROM member WHERE username = @username:text',
+    var password = await connection.query('SELECT password FROM member WHERE username = @username:text',
         substitutionValues: {"username": oldusername});
     values["password"] = password.toString();
-    await connection.query('DELETE FROM member WHERE username = @username:text',
-        substitutionValues: {"username": oldusername});
+    await connection
+        .query('DELETE FROM member WHERE username = @username:text', substitutionValues: {"username": oldusername});
     await connection.query("""INSERT INTO member 
         (NAME,BIKE,IMAGE,USERNAME,PASSWORD,WOHNORT,GEBURTSJAHR,FAHRSTIL,BESCHREIBUNG,GESCHLECHT,INSTA) 
         VALUES 
@@ -151,7 +158,6 @@ class SQL {
           substitutionValues: {"username": message.author.id});
       try {
         messageID = result[0][0].toString();
-        print(messageID);
       } catch (_) {}
     }
 
@@ -173,21 +179,15 @@ class SQL {
     List result = await connection.query(
         'SELECT * FROM message WHERE chat_name = @chat_name:text ORDER BY created_at DESC',
         substitutionValues: {"chat_name": chatName});
-    print(result);
     List<Message> messages = [];
     for (final msg in result) {
-      List result = await connection.query(
-          'SELECT username, name FROM member WHERE username = @username:text',
+      List result = await connection.query('SELECT username, name FROM member WHERE username = @username:text',
           substitutionValues: {"username": msg[2]});
       User tempUser = User(
         id: result[0][0],
         firstName: result[0][1],
       );
-      messages.add(TextMessage(
-          id: msg[0].toString(),
-          author: tempUser,
-          createdAt: msg[3],
-          text: msg[4]));
+      messages.add(TextMessage(id: msg[0].toString(), author: tempUser, createdAt: msg[3], text: msg[4]));
     }
     await connection.close();
     return messages;
